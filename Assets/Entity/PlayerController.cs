@@ -6,45 +6,52 @@ using ShadyPixel.Input;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
-    [field:SerializeField]
-    public float MaxMoveSpeed { get; set; }
-
     [field: SerializeField]
-    public Vector2 Velocitiy { get; private set; }
+    public float MaxMoveSpeed { get; set; } = 3f;
 
-    Rigidbody2D rb;
+    public Vector2 Velocity { get; private set; }
 
-    Vector2 stick;
+    private Rigidbody2D rb;
+    private Health health;
+    private Vector2 moveInput;
 
     private void Awake()
     {
-        if(TryGetComponent(out Health health))
+        if(TryGetComponent(out health))
         {
             health.OnDeath += OnDeath;
         }
     }
 
-    private void OnDeath()
-    {
-        enabled = false;
-        rb.isKinematic = true;
-    }
-
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDeath()
     {
-        stick = InputManager.InputActions.Player.Move.ReadValue<Vector2>();
+        rb.velocity = Vector2.zero;
+        rb.simulated = false;
+
+        enabled = false;
+    }
+
+    private void OnDestroy()
+    {
+        if (health)
+        {
+            health.OnDeath -= OnDeath;
+        }
+    }
+
+    private void Update()
+    {
+        moveInput = InputManager.InputActions.Player.Move.ReadValue<Vector2>();
     }
 
     private void FixedUpdate()
     {
-        rb.velocity = stick * MaxMoveSpeed;
-        Velocitiy = rb.velocity;
+        rb.velocity = moveInput * MaxMoveSpeed;
+        Velocity = rb.velocity;
     }
 }

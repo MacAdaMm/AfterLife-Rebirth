@@ -9,8 +9,9 @@ public class Health : MonoBehaviour
 
     [field: SerializeField, ReadOnly]
     public int CurrentHealth { get; protected set; }
+    public int MaxHealth => maxHealth;
 
-    public event Action<int> OnHealthChanged;
+    public event Action<int, int> OnHealthChanged;
     public event Action OnDeath;
 
     protected bool _isDead;
@@ -22,7 +23,7 @@ public class Health : MonoBehaviour
         CurrentHealth = Mathf.Max(0, newHealthAmount);
         if (OnHealthChanged != null)
         {
-            OnHealthChanged.Invoke(CurrentHealth);
+            OnHealthChanged.Invoke(CurrentHealth, maxHealth);
         }
 
         if (CurrentHealth == 0 && _isDead == false)
@@ -41,7 +42,7 @@ public class Health : MonoBehaviour
         }
         if (OnHealthChanged != null)
         {
-            OnHealthChanged.Invoke(CurrentHealth);
+            OnHealthChanged.Invoke(CurrentHealth, maxHealth);
         }
     }
 

@@ -194,7 +194,7 @@
                 },
                 {
                     "name": "Point",
-                    "type": "Value",
+                    "type": "PassThrough",
                     "id": "e5a7f497-679f-4c07-b326-bade157fb36e",
                     "expectedControlType": "Vector2",
                     "processors": "",

@@ -69,8 +69,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d1375f51c336e649be492c802176c49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <MaxMoveSpeed>k__BackingField: 8
-  <Velocitiy>k__BackingField: {x: 0, y: 0}
+  <MaxMoveSpeed>k__BackingField: 4
 --- !u!114 &8382730324405118971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83,8 +82,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9107d95790eb40e48886659ff173ae1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 3
-  <CurrentHealth>k__BackingField: 3
+  maxHealth: 5
+  <CurrentHealth>k__BackingField: 5
 --- !u!61 &889173500475570367
 BoxCollider2D:
   m_ObjectHideFlags: 0
