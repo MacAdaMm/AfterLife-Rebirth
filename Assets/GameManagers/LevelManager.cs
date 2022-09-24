@@ -6,6 +6,7 @@ using UnityEngine;
 
 public enum LevelState
 {
+    Initialization,
     Gameplay,
     Paused,
     GameOver
@@ -22,9 +23,6 @@ public class LevelManager : MonoBehaviour
 
     public LevelState CurrentState { get; private set; }
 
-    [Header("Level Settings")]
-    [SerializeField] private bool spawnPlayerOnStart = true;
-
     [Header("Player Settings")]
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private Transform spawnPoint;
@@ -36,7 +34,7 @@ public class LevelManager : MonoBehaviour
 
     public void Pause()
     {
-        if(CurrentState == LevelState.GameOver) { return; }
+        if (CurrentState != LevelState.Gameplay) { return; }
 
         Debug.Log("Pause");
         Time.timeScale = 0f;
@@ -46,7 +44,7 @@ public class LevelManager : MonoBehaviour
 
     public void Unpause()
     {
-        if (CurrentState == LevelState.GameOver) { return; }
+        if (CurrentState != LevelState.Paused) { return; }
 
         Debug.Log("Unpause");
         Time.timeScale = 1f;
@@ -58,6 +56,7 @@ public class LevelManager : MonoBehaviour
     {
         Current = this;
 
+        CurrentState = LevelState.Initialization;
         hud.SetActive(false);
         pauseScreen.SetActive(false);
         deathScreen.SetActive(false);
@@ -70,10 +69,7 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        if (spawnPlayerOnStart)
-        {
-            SpawnPlayer();
-        }
+        SpawnPlayer();
     }
 
     private void SpawnPlayer()
@@ -87,6 +83,7 @@ public class LevelManager : MonoBehaviour
         
         CurrentState = LevelState.Gameplay;
         hud.SetActive(true);
+        Time.timeScale = 1f;
     }
 
     private void OnPlayerDeath()
@@ -98,13 +95,18 @@ public class LevelManager : MonoBehaviour
 
     private void Update()
     {
+        HandlePlayerInput();
+    }
+
+    private void HandlePlayerInput()
+    {
         if (InputManager.InputActions.Player.Pause.WasPerformedThisFrame())
         {
-            if(CurrentState == LevelState.Gameplay)
+            if (CurrentState == LevelState.Gameplay)
             {
                 Pause();
             }
-            else if(CurrentState == LevelState.Paused)
+            else if (CurrentState == LevelState.Paused)
             {
                 Unpause();
             }

@@ -1,43 +1,37 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class UIDeathScreenMenu : UIMenu
+public class UIPauseScreen : UIMenu
 {
-    [Header("Respawn")]
-    [SerializeField] private Button respawnButton;
+    [Header("Resume")]
+    [SerializeField] private Button resumeButton;
 
     [Header("Main Menu")]
     [SerializeField] private Button mainMenuButton;
 
     private void Awake()
     {
-        respawnButton.onClick.AddListener(OnRespawnButtonPressed);
+        resumeButton.onClick.AddListener(OnResumeButtonPressed);
         mainMenuButton.onClick.AddListener(OnMainMenuButtonPressed);
     }
 
-
     private void OnDestroy()
     {
-        respawnButton.onClick.RemoveListener(OnRespawnButtonPressed);
+        resumeButton.onClick.RemoveListener(OnResumeButtonPressed);
         mainMenuButton.onClick.RemoveListener(OnMainMenuButtonPressed);
     }
 
-    private void OnRespawnButtonPressed()
+    private void OnResumeButtonPressed()
     {
-        Debug.Log("Respawn");
-
-        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(currentSceneIndex);
+        LevelManager.Current.Unpause();
     }
 
     private void OnMainMenuButtonPressed()
     {
-        Debug.Log("Main Menu");
-
         SceneManager.LoadScene(0);
     }
 }
+
