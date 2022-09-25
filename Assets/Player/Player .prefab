@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8382730324405118972}
   - component: {fileID: 8382730324405118973}
+  - component: {fileID: 2547905969446004726}
   - component: {fileID: 8382730324405118974}
   - component: {fileID: 8382730324405118971}
-  - component: {fileID: 889173500475570367}
   m_Layer: 0
   m_Name: 'Player '
   m_TagString: Untagged
@@ -57,6 +57,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!58 &2547905969446004726
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8382730324405118975}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.125}
+  serializedVersion: 2
+  m_Radius: 0.3125
 --- !u!114 &8382730324405118974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69,7 +85,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d1375f51c336e649be492c802176c49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <MaxMoveSpeed>k__BackingField: 4
+  animator: {fileID: 920187399574831703}
+  idleThreshold: 0.1
+  moveSpeed: 3.5
 --- !u!114 &8382730324405118971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -84,32 +102,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 5
   <CurrentHealth>k__BackingField: 5
---- !u!61 &889173500475570367
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8382730324405118975}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
 --- !u!1 &8382730325255850550
 GameObject:
   m_ObjectHideFlags: 0
@@ -120,6 +112,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8382730325255850549}
   - component: {fileID: 8382730325255850548}
+  - component: {fileID: 920187399574831703}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -183,7 +176,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: adbc793b952fc2041a23783b0e866778, type: 3}
+  m_Sprite: {fileID: -2038478230, guid: 440c117e0f7690b44a3fea53ab25ae06, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -194,3 +187,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &920187399574831703
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8382730325255850550}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4fbc30a237a3561428c68cd4fd92f4a2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

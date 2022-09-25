@@ -16,8 +16,11 @@ public class LevelManager : MonoBehaviour
 {
     public static LevelManager Current { get; private set; }
 
+    /// <summary> REDO IN FUTURE
+    /// Reference to player and health probably doesnt need to live in level manager.
+    /// Might need to replace with player singleton eventually.
+    /// </summary>
     public GameObject PlayerInstance { get; private set; }
-
     public Health PlayerHealth => playerHealth;
     private Health playerHealth;
 
@@ -76,6 +79,8 @@ public class LevelManager : MonoBehaviour
     {
         PlayerInstance = Instantiate(playerPrefab);
         PlayerInstance.transform.position = spawnPoint.position;
+        PlayerInstance.name = playerPrefab.name;
+
         if (PlayerInstance.TryGetComponent(out playerHealth))
         {
             playerHealth.OnDeath += OnPlayerDeath;

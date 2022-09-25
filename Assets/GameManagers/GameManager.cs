@@ -65,14 +65,10 @@ public class GameManager : MonoBehaviour
 		_screenFadeCanvasGroup.gameObject.SetActive(true);
 		_screenFadeCanvasGroup.DOFade(1f, 0.25f).SetEase(Ease.InOutSine).onComplete += () =>
 		{
-			if (Application.isEditor)
-			{
-				UnityEditor.EditorApplication.isPlaying = false;
-			}
-			else
-			{
-				Application.Quit();
-			}
+#if UNITY_EDITOR
+			UnityEditor.EditorApplication.isPlaying = false;
+#endif
+			Application.Quit();
 		};
 	}
 

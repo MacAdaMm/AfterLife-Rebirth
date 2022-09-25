@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class UITitleScreenMenu : UIMenu
+public class UITitleScreen : UIMenu
 {
     [Header("Start Game")]
     [SerializeField] private Button startButton;
@@ -34,11 +34,9 @@ public class UITitleScreenMenu : UIMenu
 
     private void OnQuitButtonPressed()
     {
-        if (Application.isEditor)
-        {
-            UnityEditor.EditorApplication.isPlaying = false;
-        }
-
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
         Application.Quit();
     }
 }

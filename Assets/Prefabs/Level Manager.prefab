@@ -282,6 +282,8 @@ GameObject:
   - component: {fileID: 1592880807}
   - component: {fileID: 1592880806}
   - component: {fileID: 1592880808}
+  - component: {fileID: 589370656}
+  - component: {fileID: 589370657}
   m_Layer: 0
   m_Name: Death Screen
   m_TagString: Untagged
@@ -304,7 +306,7 @@ RectTransform:
   - {fileID: 967250567}
   - {fileID: 7178160694699044373}
   m_Father: {fileID: 1886779352}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -364,6 +366,38 @@ MonoBehaviour:
   _defaultSelected: {fileID: 2189815704180491759}
   respawnButton: {fileID: 3526831205336246333}
   mainMenuButton: {fileID: 922661088}
+--- !u!225 &589370656
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1592880804}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!95 &589370657
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1592880804}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: dde988b2568680e4e80d4efa64251162, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1825622905
 GameObject:
   m_ObjectHideFlags: 0
@@ -531,8 +565,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 40501282134694707}
-  - {fileID: 9121203782271771667}
   - {fileID: 1592880805}
+  - {fileID: 9121203782271771667}
   m_Father: {fileID: 2551056050070636442}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1989,7 +2023,7 @@ RectTransform:
   m_Children:
   - {fileID: 7239799442168351749}
   m_Father: {fileID: 1886779352}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

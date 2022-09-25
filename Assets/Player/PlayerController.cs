@@ -6,8 +6,11 @@ using ShadyPixel.Input;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
-    [field: SerializeField]
-    public float MaxMoveSpeed { get; set; } = 3f;
+    private const float IDLE_THRESHOLD = 0.1f;
+
+    [SerializeField] private Animator animator;
+    [SerializeField] private float moveSpeed = 3.5f;
+    [SerializeField] private bool flipAnimatorWithOrientation = true;
 
     public Vector2 Velocity { get; private set; }
 
@@ -33,6 +36,11 @@ public class PlayerController : MonoBehaviour
         rb.velocity = Vector2.zero;
         rb.simulated = false;
 
+        if (animator)
+        {
+            animator.SetBool("IsDead", true);
+        }
+
         enabled = false;
     }
 
@@ -47,11 +55,32 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         moveInput = InputManager.InputActions.Player.Move.ReadValue<Vector2>();
+        if(moveInput.magnitude < IDLE_THRESHOLD)
+        {
+            moveInput = Vector2.zero;
+        }
     }
 
     private void FixedUpdate()
     {
-        rb.velocity = moveInput * MaxMoveSpeed;
+        rb.velocity = moveInput * moveSpeed;
         Velocity = rb.velocity;
+
+        if (animator)
+        {
+            animator.SetFloat("Speed", Velocity.magnitude);
+
+            if (flipAnimatorWithOrientation)
+            {
+                if(moveInput.x > float.Epsilon)
+                {
+                    animator.transform.right = Vector3.right;
+                }
+                else if (moveInput.x < -float.Epsilon)
+                {
+                    animator.transform.right = Vector3.left ;
+                }
+            }
+        }
     }
 }
