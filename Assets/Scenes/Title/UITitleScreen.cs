@@ -29,7 +29,7 @@ public class UITitleScreen : UIMenu
 
     private void OnStartButtonPressed()
     {
-        SceneManager.LoadScene(_startingScene);
+        GameManager.Instance.ReloadFromCheckPoint();
     }
 
     private void OnQuitButtonPressed()

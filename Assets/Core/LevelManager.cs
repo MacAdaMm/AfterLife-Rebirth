@@ -2,6 +2,7 @@ using ShadyPixel.Input;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public enum LevelState
@@ -11,9 +12,10 @@ public enum LevelState
     Paused,
     GameOver
 }
-
 public class LevelManager : MonoBehaviour
 {
+    private string _targetEntryPoint;
+
     public static LevelManager Current { get; private set; }
 
     /// <summary> REDO IN FUTURE
@@ -28,12 +30,15 @@ public class LevelManager : MonoBehaviour
 
     [Header("Player Settings")]
     [SerializeField] private GameObject playerPrefab;
-    [SerializeField] private Transform spawnPoint;
+
+    [field: SerializeField] public Transform SpawnPoint { get; set; }
 
     [Header("UI")]
     [SerializeField] private GameObject hud;
     [SerializeField] private GameObject pauseScreen;
     [SerializeField] private GameObject deathScreen;
+
+    public event Action<GameObject> OnPlayerSpawn;
 
     public void Pause()
     {
@@ -43,6 +48,11 @@ public class LevelManager : MonoBehaviour
         Time.timeScale = 0f;
         CurrentState = LevelState.Paused;
         pauseScreen.SetActive(true);
+    }
+
+    public void SetEntryPoint(string levelEntryPointId)
+    {
+        _targetEntryPoint = levelEntryPointId;
     }
 
     public void Unpause()
@@ -63,6 +73,15 @@ public class LevelManager : MonoBehaviour
         hud.SetActive(false);
         pauseScreen.SetActive(false);
         deathScreen.SetActive(false);
+
+        var cams = FindObjectsOfType<Cinemachine.CinemachineVirtualCamera>();
+        foreach (var cam in cams)
+        {
+            OnPlayerSpawn += (go) =>
+            {
+                cam.Follow = go.transform;
+            };
+        }
     }
 
     private void OnDestroy()
@@ -78,7 +97,26 @@ public class LevelManager : MonoBehaviour
     private void SpawnPlayer()
     {
         PlayerInstance = Instantiate(playerPrefab);
-        PlayerInstance.transform.position = spawnPoint.position;
+        var entryPoints = FindObjectsOfType<LevelEntry>();
+
+        LevelEntry entryPoint = null;
+        for (int i = 0; i < entryPoints.Length; i++)
+        {
+            if(entryPoints[i].Id == _targetEntryPoint)
+            {
+                entryPoint = entryPoints[i];
+            }
+        }
+        //var entryPoint = entryPoints.Where((point) => point.Id == _targetEntryPoint).FirstOrDefault();
+        var spawnPosition = SpawnPoint.position;
+
+        if (entryPoint != null)
+        {
+            spawnPosition = entryPoint.SpawnOffset.position;
+        }
+
+        PlayerInstance.transform.position = spawnPosition;
+
         PlayerInstance.name = playerPrefab.name;
 
         if (PlayerInstance.TryGetComponent(out playerHealth))
@@ -89,6 +127,7 @@ public class LevelManager : MonoBehaviour
         CurrentState = LevelState.Gameplay;
         hud.SetActive(true);
         Time.timeScale = 1f;
+        OnPlayerSpawn?.Invoke(PlayerInstance);
     }
 
     private void OnPlayerDeath()
@@ -117,4 +156,5 @@ public class LevelManager : MonoBehaviour
             }
         }
     }
+
 }

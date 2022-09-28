@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -91,4 +92,5 @@ public static class SaveManager
     {
         return Path.Combine(Application.persistentDataPath, saveFile + ".sav");
     }
+
 }

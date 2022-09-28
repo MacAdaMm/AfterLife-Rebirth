@@ -29,9 +29,7 @@ public class UIDeathScreen : UIMenu
     private void OnRespawnButtonPressed()
     {
         Debug.Log("Respawn");
-
-        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(currentSceneIndex);
+        GameManager.Instance.ReloadFromCheckPoint();
     }
 
     private void OnMainMenuButtonPressed()
