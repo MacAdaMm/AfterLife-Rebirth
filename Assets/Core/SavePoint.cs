@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SavePoint : MonoBehaviour
 {
+    [SerializeField] private Sprite _activeSprite;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -12,10 +13,8 @@ public class SavePoint : MonoBehaviour
             return;
         }
 
+        gameObject.GetComponent<SpriteRenderer>().sprite = _activeSprite;
         GameManager.Instance.SetCheckpoint(this);
-        //LevelManager.Current.SpawnPoint = transform;
-
-        Debug.Log("Saving Game...");
         SaveManager.Save();
     }
 }

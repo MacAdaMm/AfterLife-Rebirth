@@ -58,7 +58,7 @@ public static class SaveManager
     private static void SaveFile(string saveFile, object state)
     {
         string path = GetPathFromSaveFile(saveFile);
-        //print("Saving to " + path);
+        //Debug.Log("Saving to " + path);
         using (FileStream stream = File.Open(path, FileMode.Create))
         {
             BinaryFormatter formatter = new BinaryFormatter();

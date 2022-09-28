@@ -1,5 +1,4 @@
-﻿using Sirenix.OdinInspector;
-using System;
+﻿using System;
 using UnityEngine;
 
 public class Health : MonoBehaviour
@@ -7,7 +6,7 @@ public class Health : MonoBehaviour
     [SerializeField] 
     protected int maxHealth = 3;
 
-    [field: SerializeField, ReadOnly]
+    [field: SerializeField]
     public int CurrentHealth { get; protected set; }
     public int MaxHealth => maxHealth;
 
@@ -16,7 +15,6 @@ public class Health : MonoBehaviour
 
     protected bool _isDead;
 
-    [Button]
     public void Damage(int damage = 1)
     {
         int newHealthAmount = CurrentHealth - damage;

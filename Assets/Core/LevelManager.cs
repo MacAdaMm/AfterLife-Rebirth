@@ -97,9 +97,9 @@ public class LevelManager : MonoBehaviour
     private void SpawnPlayer()
     {
         PlayerInstance = Instantiate(playerPrefab);
-        var entryPoints = FindObjectsOfType<LevelEntry>();
+        var entryPoints = FindObjectsOfType<LevelEntryPoint>();
 
-        LevelEntry entryPoint = null;
+        LevelEntryPoint entryPoint = null;
         for (int i = 0; i < entryPoints.Length; i++)
         {
             if(entryPoints[i].Id == _targetEntryPoint)
@@ -107,6 +107,7 @@ public class LevelManager : MonoBehaviour
                 entryPoint = entryPoints[i];
             }
         }
+
         //var entryPoint = entryPoints.Where((point) => point.Id == _targetEntryPoint).FirstOrDefault();
         var spawnPosition = SpawnPoint.position;
 
@@ -127,6 +128,7 @@ public class LevelManager : MonoBehaviour
         CurrentState = LevelState.Gameplay;
         hud.SetActive(true);
         Time.timeScale = 1f;
+        InputManager.InputActions.Player.Enable();
         OnPlayerSpawn?.Invoke(PlayerInstance);
     }
 

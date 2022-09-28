@@ -218,7 +218,7 @@ RectTransform:
   m_Children:
   - {fileID: 1268656939}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1176,7 +1176,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1671181272
 MonoBehaviour:
@@ -1414,17 +1414,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5910660160562737067, guid: 567b8e462af547140b018cdb10861e7a, type: 3}
-      propertyPath: _uniqueIdentifier
-      value: c9fb8b71-ece1-40a2-8a11-351047cd8fff
-      objectReference: {fileID: 0}
     - target: {fileID: 7842679749574907576, guid: 567b8e462af547140b018cdb10861e7a, type: 3}
       propertyPath: m_Name
       value: Game Manager
       objectReference: {fileID: 0}
     - target: {fileID: 7842679749574907578, guid: 567b8e462af547140b018cdb10861e7a, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7842679749574907578, guid: 567b8e462af547140b018cdb10861e7a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1617,7 +1613,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8324743716333705565, guid: 4b9cbcb94d349f640839fe4c7a66dbf2, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8324743716333705565, guid: 4b9cbcb94d349f640839fe4c7a66dbf2, type: 3}
       propertyPath: m_LocalPosition.x

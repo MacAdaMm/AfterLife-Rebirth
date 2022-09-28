@@ -88,6 +88,9 @@ MonoBehaviour:
   animator: {fileID: 920187399574831703}
   moveSpeed: 3.5
   flipAnimatorWithOrientation: 1
+  _holeLayer:
+    serializedVersion: 2
+    m_Bits: 16
 --- !u!114 &8382730324405118971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100,8 +103,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9107d95790eb40e48886659ff173ae1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 5
-  <CurrentHealth>k__BackingField: 5
+  maxHealth: 3
+  <CurrentHealth>k__BackingField: 3
 --- !u!1 &8382730325255850550
 GameObject:
   m_ObjectHideFlags: 0

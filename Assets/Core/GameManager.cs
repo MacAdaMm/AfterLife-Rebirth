@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour, ISaveable
     }
 	
 	[SerializeField]
-	private string _levelEntryPointId;
+	private string _targetLevelEntryPointId;
 	public static GameManager Instance { get; private set; }
 
 	private static SaveData _saveData = new SaveData();
@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour, ISaveable
 	}
 	public void LoadScene(string scenename, string levelEntryPointId, float fadeDuration = 0.5f, float delayBeforeFadeOut = 0.25f, float fadeOutDuration = 0.5f)
     {
-		_levelEntryPointId = levelEntryPointId;
+		_targetLevelEntryPointId = levelEntryPointId;
 		LoadScene(scenename, fadeDuration, delayBeforeFadeOut, fadeOutDuration);
     }
 
@@ -78,9 +78,10 @@ public class GameManager : MonoBehaviour, ISaveable
         {
 			return;
         }
+
 		SaveManager.Load();
-		LevelManager.Current?.SetEntryPoint(_levelEntryPointId);
-		_levelEntryPointId = null;
+		LevelManager.Current?.SetEntryPoint(_targetLevelEntryPointId);
+		_targetLevelEntryPointId = null;
 
 	}
 
@@ -134,7 +135,7 @@ public class GameManager : MonoBehaviour, ISaveable
 
 	public void SetCheckpoint(SavePoint savePoint)
 	{
-		_saveData.CheckPointId = savePoint.GetComponent<LevelEntry>().Id;
+		_saveData.CheckPointId = savePoint.GetComponent<LevelEntryPoint>().Id;
 		_saveData.CheckPointSceneName = SceneManager.GetActiveScene().name;
 	}
 
@@ -166,7 +167,7 @@ public class GameManager : MonoBehaviour, ISaveable
 	}
 	public void ReloadFromCheckPoint()
 	{
-		SaveManager.Load();
+		//SaveManager.Load();
 		Instance.LoadScene(_saveData.CheckPointSceneName, _saveData.CheckPointId);
 	}
 

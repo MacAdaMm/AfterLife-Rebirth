@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using ShadyPixel.Input;
+using System;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
@@ -11,12 +12,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private float moveSpeed = 3.5f;
     [SerializeField] private bool flipAnimatorWithOrientation = true;
+    [SerializeField] private LayerMask _holeLayer;
 
     public Vector2 Velocity { get; private set; }
 
     private Rigidbody2D rb;
     private Health health;
     private Vector2 moveInput;
+    private bool _isOverHole;
 
     private void Awake()
     {
@@ -63,6 +66,8 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        CheckForHoles();
+
         rb.velocity = moveInput * moveSpeed;
         Velocity = rb.velocity;
 
@@ -81,6 +86,28 @@ public class PlayerController : MonoBehaviour
                     animator.transform.right = Vector3.left ;
                 }
             }
+        }
+    }
+
+    private void CheckForHoles()
+    {
+        _isOverHole = false;
+
+        var collider2d = GetComponent<Collider2D>();
+        var overlapCollidersCenter = Physics2D.OverlapPointAll(transform.position);
+        foreach(Collider2D collider in overlapCollidersCenter)
+        {
+            if (collider.gameObject.IsInLayerMask(_holeLayer))
+            {
+                _isOverHole = true;
+            }
+        }
+
+        animator.SetBool("IsFalling", _isOverHole);
+
+        if (_isOverHole && health.CurrentHealth > 0)
+        {
+            health.Kill();
         }
     }
 }

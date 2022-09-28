@@ -635,7 +635,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 55
 --- !u!1 &122156173045707103
 GameObject:
   m_ObjectHideFlags: 0
@@ -1511,6 +1511,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2551056050070636442}
   - component: {fileID: 2551056050070636445}
+  - component: {fileID: 103314426}
   m_Layer: 0
   m_Name: Level Manager
   m_TagString: Untagged
@@ -1550,10 +1551,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 8382730324405118975, guid: ad4b24bdcd8418a42960a0c7dca64263, type: 3}
-  spawnPoint: {fileID: 2551056049730878582}
+  <SpawnPoint>k__BackingField: {fileID: 2551056049730878582}
   hud: {fileID: 7613510550267653494}
   pauseScreen: {fileID: 657207559427524682}
   deathScreen: {fileID: 1592880804}
+--- !u!114 &103314426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2551056050070636444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c7102afb938b1545a304dfe94c34b27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _uniqueIdentifier: Level Manager
 --- !u!1 &3459777720946884707
 GameObject:
   m_ObjectHideFlags: 0
