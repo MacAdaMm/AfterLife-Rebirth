@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e51fed5a109fd74b8c95c950191d376, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _levelEntryPointId: 
+  _editorLoadGameDataOnAwake: 0
   _screenFadeCanvasGroup: {fileID: 7842679749714126013}
 --- !u!114 &5910660160562737067
 MonoBehaviour:

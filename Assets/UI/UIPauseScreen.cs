@@ -31,7 +31,7 @@ public class UIPauseScreen : UIMenu
 
     private void OnMainMenuButtonPressed()
     {
-        SceneManager.LoadScene(0);
+        GameManager.Instance.LoadScene("Title");
     }
 }
 

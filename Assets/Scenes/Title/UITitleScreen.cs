@@ -7,12 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class UITitleScreen : UIMenu
 {
-    [Header("Start Game")]
     [SerializeField] private Button startButton;
-    [SerializeField] private string _startingScene;
-
-    [Space]
-    [Header("Quit Game")]
     [SerializeField] private Button quitButton;
 
     private void Awake()
@@ -29,14 +24,11 @@ public class UITitleScreen : UIMenu
 
     private void OnStartButtonPressed()
     {
-        GameManager.Instance.ReloadFromCheckPoint();
+        GameManager.Instance.LoadGame();
     }
 
     private void OnQuitButtonPressed()
     {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#endif
-        Application.Quit();
+        GameManager.Instance.QuitApplication();
     }
 }

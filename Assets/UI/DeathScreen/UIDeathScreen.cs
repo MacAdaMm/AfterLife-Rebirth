@@ -28,14 +28,11 @@ public class UIDeathScreen : UIMenu
 
     private void OnRespawnButtonPressed()
     {
-        Debug.Log("Respawn");
-        GameManager.Instance.ReloadFromCheckPoint();
+        GameManager.Instance.LoadGame();
     }
 
     private void OnMainMenuButtonPressed()
     {
-        Debug.Log("Main Menu");
-
-        SceneManager.LoadScene(0);
+        GameManager.Instance.LoadScene("Title");
     }
 }

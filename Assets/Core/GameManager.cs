@@ -29,34 +29,43 @@ public class GameManager : MonoBehaviour, ISaveable
 		public string CheckPointSceneName = "SandBox";
 		public string CheckPointId = null;
     }
-	
+
 	[SerializeField]
-	private string _targetLevelEntryPointId;
-	public static GameManager Instance { get; private set; }
+	[Tooltip("Should the game data be loaded on Awake(), If FALSE game data will have default values.\n" +
+        "Will only work in editor mode.")]
+	 private bool _editorLoadGameDataOnAwake = false;
+
+	[SerializeField] 
+	private CanvasGroup _screenFadeCanvasGroup;
 
 	private static SaveData _saveData = new SaveData();
-
-	[SerializeField] private CanvasGroup _screenFadeCanvasGroup;
-	
 	private bool _isLoadingScene;
+	private string _targetLevelEntryPointId;
 
-	public void LoadScene(string sceneName, float fadeDuration = 0.5f, float delayBeforeFadeOut = 0.25f, float fadeOutDuration = 0.5f)
+	public static GameManager Instance { get; private set; }
+
+	public void LoadScene(string sceneName, float fadeDuration = 0.15f, float delayBeforeFadeOut = 0.1f, float fadeOutDuration = 0.25f)
 	{
 		if (_isLoadingScene)
 		{
 			return;
 		}
 
+		SaveManager.Save();
+
 		_screenFadeCanvasGroup.DOComplete();
 		_screenFadeCanvasGroup.alpha = 0f;
 		_screenFadeCanvasGroup.gameObject.SetActive(true);
 		_isLoadingScene = true;
 
-        
+        if (EventSystem.current)
+        {
+			EventSystem.current.sendNavigationEvents = false;
+        }
 
 		_screenFadeCanvasGroup.DOFade(1f, fadeDuration).SetUpdate(true).SetEase(Ease.InOutSine).onComplete += () =>
 		{
-			//SaveManager.Save();
+			
 			SceneManager.LoadScene(sceneName);
 
 			_isLoadingScene = false;
@@ -66,7 +75,8 @@ public class GameManager : MonoBehaviour, ISaveable
 			};
 		};
 	}
-	public void LoadScene(string scenename, string levelEntryPointId, float fadeDuration = 0.5f, float delayBeforeFadeOut = 0.25f, float fadeOutDuration = 0.5f)
+
+	public void LoadScene(string scenename, string levelEntryPointId, float fadeDuration = 0.15f, float delayBeforeFadeOut = 0.1f, float fadeOutDuration = 0.25f)
     {
 		_targetLevelEntryPointId = levelEntryPointId;
 		LoadScene(scenename, fadeDuration, delayBeforeFadeOut, fadeOutDuration);
@@ -82,15 +92,18 @@ public class GameManager : MonoBehaviour, ISaveable
 		SaveManager.Load();
 		LevelManager.Current?.SetEntryPoint(_targetLevelEntryPointId);
 		_targetLevelEntryPointId = null;
-
 	}
 
 	public void QuitApplication()
 	{
+        if (EventSystem.current)
+        {
+			EventSystem.current.sendNavigationEvents = false;
+        }
 
 		_screenFadeCanvasGroup.alpha = 0f;
 		_screenFadeCanvasGroup.gameObject.SetActive(true);
-		_screenFadeCanvasGroup.DOFade(1f, 0.25f).SetEase(Ease.InOutSine).onComplete += () =>
+		_screenFadeCanvasGroup.DOFade(1f, 1f).SetUpdate(true).SetEase(Ease.InOutSine).onComplete += () =>
 		{
 #if UNITY_EDITOR
 			UnityEditor.EditorApplication.isPlaying = false;
@@ -105,7 +118,12 @@ public class GameManager : MonoBehaviour, ISaveable
 		{
 			Instance = this;
 			DontDestroyOnLoad(gameObject);
-			SceneManager.sceneLoaded += SceneManager_sceneLoaded;
+			if (Application.isEditor && _editorLoadGameDataOnAwake == false)
+			{
+				return;
+			}
+
+			SaveManager.Load();
 		}
 		else
 		{
@@ -125,9 +143,11 @@ public class GameManager : MonoBehaviour, ISaveable
 
     protected void Start()
 	{
+		SceneManager.sceneLoaded += SceneManager_sceneLoaded;
+
 		_screenFadeCanvasGroup.alpha = 1f;
 		_screenFadeCanvasGroup.gameObject.SetActive(true);
-		_screenFadeCanvasGroup.DOFade(0f, 1f).SetDelay(0.15f).SetEase(Ease.InOutSine).onComplete += () =>
+		_screenFadeCanvasGroup.DOFade(0f, 1f).SetUpdate(true).SetDelay(0.15f).SetEase(Ease.InOutSine).onComplete += () =>
 		{
 			_screenFadeCanvasGroup.gameObject.SetActive(false);
 		};
@@ -139,35 +159,8 @@ public class GameManager : MonoBehaviour, ISaveable
 		_saveData.CheckPointSceneName = SceneManager.GetActiveScene().name;
 	}
 
-	[MenuItem("Utility/Save Game")]
-	private static void EditorSave()
-    {
-		SaveManager.Save();
-    }
-	[MenuItem("Utility/Load Game")]
-	private static void EditorLoad()
-    {
-		SaveManager.Load();
-    }
-	[MenuItem("Utility/Delete Save")]
-	private static void EditorDelete()
+	public void LoadGame()
 	{
-		SaveManager.Delete();
-	}
-
-	[MenuItem("Utility/Reload Scene")]
-	private static void EditorReloadScene()
-	{
-		Instance.LoadScene(SceneManager.GetActiveScene().name);
-	}
-	[MenuItem("Utility/Reload From Checkpoint")]
-	private static void EditorReloadFromCheckPoint()
-    {
-		Instance.LoadScene(_saveData.CheckPointSceneName, _saveData.CheckPointId);
-	}
-	public void ReloadFromCheckPoint()
-	{
-		//SaveManager.Load();
 		Instance.LoadScene(_saveData.CheckPointSceneName, _saveData.CheckPointId);
 	}
 
@@ -180,4 +173,30 @@ public class GameManager : MonoBehaviour, ISaveable
     {
 		_saveData = (SaveData)state;
     }
+
+#if UNITY_EDITOR
+	[MenuItem("Utility/Save Game")]
+	private static void EditorSave()
+	{
+		SaveManager.Save();
+	}
+
+	[MenuItem("Utility/Load Game")]
+	private static void EditorLoad()
+	{
+		SaveManager.Load();
+	}
+
+	[MenuItem("Utility/Delete Save")]
+	private static void EditorDelete()
+	{
+		SaveManager.Delete();
+	}
+
+	[MenuItem("Utility/Reload From Checkpoint")]
+	private static void EditorReloadFromCheckpoint()
+	{
+		Instance.LoadGame();
+	}
+#endif
 }
