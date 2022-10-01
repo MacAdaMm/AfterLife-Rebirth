@@ -30,6 +30,9 @@ public class GameManager : MonoBehaviour, ISaveable
 		public string CheckPointId = null;
     }
 
+	public string CurrentCheckpointId { get => _saveData.CheckPointId; }
+	public string CurrentCheckpointSceneName { get => _saveData.CheckPointSceneName; }
+
 	[SerializeField]
 	[Tooltip("Should the game data be loaded on Awake(), If FALSE game data will have default values.\n" +
         "Will only work in editor mode.")]

@@ -31,7 +31,7 @@ public class LevelManager : MonoBehaviour
     [Header("Player Settings")]
     [SerializeField] private GameObject playerPrefab;
 
-    [field: SerializeField] public Transform SpawnPoint { get; set; }
+    [field: SerializeField] public Transform DefaultSpawnPoint { get; set; }
 
     [Header("UI")]
     [SerializeField] private GameObject hud;
@@ -91,25 +91,20 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        SpawnPlayer();
+        LevelEntryPoint entryPoint = FindObjectsOfType<LevelEntryPoint>().Where((e) => e.Id == _targetEntryPoint).FirstOrDefault();
+
+        SpawnPlayer(entryPoint);
+
+        CurrentState = LevelState.Gameplay;
+        Time.timeScale = 1f; // <- could be set in awake?
+        InputManager.InputActions.Player.Enable();
     }
 
-    private void SpawnPlayer()
+    private void SpawnPlayer(LevelEntryPoint entryPoint)
     {
         PlayerInstance = Instantiate(playerPrefab);
-        var entryPoints = FindObjectsOfType<LevelEntryPoint>();
 
-        LevelEntryPoint entryPoint = null;
-        for (int i = 0; i < entryPoints.Length; i++)
-        {
-            if(entryPoints[i].Id == _targetEntryPoint)
-            {
-                entryPoint = entryPoints[i];
-            }
-        }
-
-        //var entryPoint = entryPoints.Where((point) => point.Id == _targetEntryPoint).FirstOrDefault();
-        var spawnPosition = SpawnPoint.position;
+        var spawnPosition = DefaultSpawnPoint.position;
 
         if (entryPoint != null)
         {
@@ -125,10 +120,6 @@ public class LevelManager : MonoBehaviour
             playerHealth.OnDeath += OnPlayerDeath;
         }
         
-        CurrentState = LevelState.Gameplay;
-        hud.SetActive(true);
-        Time.timeScale = 1f;
-        InputManager.InputActions.Player.Enable();
         OnPlayerSpawn?.Invoke(PlayerInstance);
     }
 

@@ -6529,5 +6529,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Level Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 2551056050070636445, guid: 2dbfd5f6012bd84448ef0566cf34e623, type: 3}
+      propertyPath: <DefaultSpawnPoint>k__BackingField
+      value: 
+      objectReference: {fileID: 2551056050819661639}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2dbfd5f6012bd84448ef0566cf34e623, type: 3}
+--- !u!4 &2551056050819661639 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2551056049730878582, guid: 2dbfd5f6012bd84448ef0566cf34e623, type: 3}
+  m_PrefabInstance: {fileID: 2551056050819661638}
+  m_PrefabAsset: {fileID: 0}

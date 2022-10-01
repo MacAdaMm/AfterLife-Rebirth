@@ -1465,6 +1465,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 288686010}
     - target: {fileID: 2551056050070636445, guid: 2dbfd5f6012bd84448ef0566cf34e623, type: 3}
+      propertyPath: <DefaultSpawnPoint>k__BackingField
+      value: 
+      objectReference: {fileID: 288686010}
+    - target: {fileID: 2551056050070636445, guid: 2dbfd5f6012bd84448ef0566cf34e623, type: 3}
       propertyPath: _entryPoints.Array.data[0].<Id>k__BackingField
       value: Test1
       objectReference: {fileID: 0}

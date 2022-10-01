@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DebugScenes/SwapScene Example.unity
     guid: 10cba2924bcbd7d4d92739e02d66405c
+  - enabled: 1
+    path: Assets/Scenes/DebugScenes/CheckPoint Example 1.unity
+    guid: 2a65fc33d1192c148acb5e31977b75fc
   m_configObjects: {}
