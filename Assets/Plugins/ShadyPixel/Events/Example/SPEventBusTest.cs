@@ -45,7 +45,7 @@ public partial class SPEventBusTest : MonoBehaviour, ISPEventListenerBase<SPGame
          * 3. Call the AddListener method on the EventBus with the SPEventListener as the parameter.
          * _eventBus.Add(_gameEventListener);
          */
-
+        _gameEventListener.StartListening();
         // If implementing the ISPEventListener directly. we need to add the listener to the EventBus to start listening for events.
         // If more than one interface is used on a class them you must add the generic type <EventType> to the method call the EventType to Add/Remove Listener.
         _eventBus.AddListener(this);
