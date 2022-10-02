@@ -56,7 +56,7 @@ namespace ShadyPixel.Events
             if (_lookup.TryGetValue(type, out List<ISPEventListenerBase> subscriptions))
             {
                 keyExists = true;
-                subExists = subscriptions.IndexOf(receiver) > 0;
+                subExists = subscriptions.IndexOf(receiver) >= 0;
             }
 
             return (keyExists, subExists);
