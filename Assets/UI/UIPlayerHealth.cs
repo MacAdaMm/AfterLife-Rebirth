@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class UIPlayerHealth : MonoBehaviour
 {
-    [SerializeField] private RectTransform maxHealthTransform;
-    [SerializeField] private RectTransform currentHealthTransform;
-    [SerializeField] private float spriteSize = 16f;
+    [SerializeField] private RectTransform _maxHealthTransform;
+    [SerializeField] private RectTransform _currentHealthTransform;
+    [SerializeField] private float _spriteSize = 16f;
 
     private void UpdateHealth(int currentHealth, int maxHealth)
     {
-        currentHealthTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, currentHealth * spriteSize);
-        maxHealthTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, maxHealth * spriteSize);
+        _currentHealthTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, currentHealth * _spriteSize);
+        _maxHealthTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, maxHealth * _spriteSize);
     }
 
     private void Start()

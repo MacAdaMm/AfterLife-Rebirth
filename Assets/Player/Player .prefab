@@ -13,6 +13,9 @@ GameObject:
   - component: {fileID: 2547905969446004726}
   - component: {fileID: 8382730324405118974}
   - component: {fileID: 8382730324405118971}
+  - component: {fileID: 6195221713883040428}
+  - component: {fileID: 7099980012156843058}
+  - component: {fileID: 8459709508011659270}
   m_Layer: 0
   m_Name: 'Player '
   m_TagString: Player
@@ -86,11 +89,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 920187399574831703}
-  moveSpeed: 3.5
   flipAnimatorWithOrientation: 1
-  _holeLayer:
-    serializedVersion: 2
-    m_Bits: 16
+  _weaponController: {fileID: 6195221713883040428}
+  _movementController: {fileID: 7099980012156843058}
 --- !u!114 &8382730324405118971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105,6 +106,48 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 3
   <CurrentHealth>k__BackingField: 3
+--- !u!114 &6195221713883040428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8382730324405118975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b7ea597e30772642b004c534cbc7673, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <CurrentWeapon>k__BackingField: {fileID: 0}
+--- !u!114 &7099980012156843058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8382730324405118975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9f7251f92cd89d40b9c2a00b716222d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moveSpeed: 3.5
+  _rigidBody: {fileID: 8382730324405118973}
+--- !u!114 &8459709508011659270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8382730324405118975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3fe1895982e29349912fb26d93d1fc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _holeLayer:
+    serializedVersion: 2
+    m_Bits: 16
 --- !u!1 &8382730325255850550
 GameObject:
   m_ObjectHideFlags: 0

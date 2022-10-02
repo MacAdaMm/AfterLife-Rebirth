@@ -7,19 +7,19 @@ using UnityEngine.SceneManagement;
 
 public class UITitleScreen : UIMenu
 {
-    [SerializeField] private Button startButton;
-    [SerializeField] private Button quitButton;
+    [SerializeField] private Button _startButton;
+    [SerializeField] private Button _quitButton;
 
     private void Awake()
     {
-        startButton.onClick.AddListener(OnStartButtonPressed);
-        quitButton.onClick.AddListener(OnQuitButtonPressed);
+        _startButton.onClick.AddListener(OnStartButtonPressed);
+        _quitButton.onClick.AddListener(OnQuitButtonPressed);
     }
 
     private void OnDestroy()
     {
-        startButton.onClick.RemoveListener(OnStartButtonPressed);
-        quitButton.onClick.RemoveListener(OnQuitButtonPressed);
+        _startButton.onClick.RemoveListener(OnStartButtonPressed);
+        _quitButton.onClick.RemoveListener(OnQuitButtonPressed);
     }
 
     private void OnStartButtonPressed()

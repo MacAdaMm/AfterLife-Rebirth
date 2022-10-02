@@ -7,21 +7,21 @@ using UnityEngine.UI;
 public class UIPauseScreen : UIMenu
 {
     [Header("Resume")]
-    [SerializeField] private Button resumeButton;
+    [SerializeField] private Button _resumeButton;
 
     [Header("Main Menu")]
-    [SerializeField] private Button mainMenuButton;
+    [SerializeField] private Button _mainMenuButton;
 
     private void Awake()
     {
-        resumeButton.onClick.AddListener(OnResumeButtonPressed);
-        mainMenuButton.onClick.AddListener(OnMainMenuButtonPressed);
+        _resumeButton.onClick.AddListener(OnResumeButtonPressed);
+        _mainMenuButton.onClick.AddListener(OnMainMenuButtonPressed);
     }
 
     private void OnDestroy()
     {
-        resumeButton.onClick.RemoveListener(OnResumeButtonPressed);
-        mainMenuButton.onClick.RemoveListener(OnMainMenuButtonPressed);
+        _resumeButton.onClick.RemoveListener(OnResumeButtonPressed);
+        _mainMenuButton.onClick.RemoveListener(OnMainMenuButtonPressed);
     }
 
     private void OnResumeButtonPressed()

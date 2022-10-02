@@ -13,7 +13,7 @@ public class Health : MonoBehaviour
     public event Action<int, int> OnHealthChanged;
     public event Action OnDeath;
 
-    protected bool _isDead;
+    public bool IsDead { get; protected set; }
 
     public void Damage(int damage = 1)
     {
@@ -24,7 +24,7 @@ public class Health : MonoBehaviour
             OnHealthChanged.Invoke(CurrentHealth, maxHealth);
         }
 
-        if (CurrentHealth == 0 && _isDead == false)
+        if (CurrentHealth == 0 && IsDead == false)
         {
             Kill();
         }
@@ -33,7 +33,7 @@ public class Health : MonoBehaviour
     public void Kill()
     {
         CurrentHealth = 0;
-        _isDead = true;
+        IsDead = true;
         if (OnDeath != null)
         {
             OnDeath.Invoke();

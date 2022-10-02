@@ -23,20 +23,20 @@ public class LevelManager : MonoBehaviour
     /// Might need to replace with player singleton eventually.
     /// </summary>
     public GameObject PlayerInstance { get; private set; }
-    public Health PlayerHealth => playerHealth;
-    private Health playerHealth;
+    public Health PlayerHealth => _playerHealth;
+    private Health _playerHealth;
 
     public LevelState CurrentState { get; private set; }
 
     [Header("Player Settings")]
-    [SerializeField] private GameObject playerPrefab;
+    [SerializeField] private GameObject _playerPrefab;
 
     [field: SerializeField] public Transform DefaultSpawnPoint { get; set; }
 
     [Header("UI")]
-    [SerializeField] private GameObject hud;
-    [SerializeField] private GameObject pauseScreen;
-    [SerializeField] private GameObject deathScreen;
+    [SerializeField] private GameObject _hud;
+    [SerializeField] private GameObject _pauseScreen;
+    [SerializeField] private GameObject _deathScreen;
 
     public event Action<GameObject> OnPlayerSpawn;
 
@@ -47,7 +47,7 @@ public class LevelManager : MonoBehaviour
         Debug.Log("Pause");
         Time.timeScale = 0f;
         CurrentState = LevelState.Paused;
-        pauseScreen.SetActive(true);
+        _pauseScreen.SetActive(true);
     }
 
     public void SetEntryPoint(string levelEntryPointId)
@@ -62,7 +62,7 @@ public class LevelManager : MonoBehaviour
         Debug.Log("Unpause");
         Time.timeScale = 1f;
         CurrentState = LevelState.Gameplay;
-        pauseScreen.SetActive(false);
+        _pauseScreen.SetActive(false);
     }
 
     private void Awake()
@@ -70,9 +70,9 @@ public class LevelManager : MonoBehaviour
         Current = this;
 
         CurrentState = LevelState.Initialization;
-        hud.SetActive(false);
-        pauseScreen.SetActive(false);
-        deathScreen.SetActive(false);
+        _hud.SetActive(false);
+        _pauseScreen.SetActive(false);
+        _deathScreen.SetActive(false);
 
         var cams = FindObjectsOfType<Cinemachine.CinemachineVirtualCamera>();
         foreach (var cam in cams)
@@ -94,7 +94,7 @@ public class LevelManager : MonoBehaviour
         LevelEntryPoint entryPoint = FindObjectsOfType<LevelEntryPoint>().Where((e) => e.Id == _targetEntryPoint).FirstOrDefault();
 
         SpawnPlayer(entryPoint);
-
+        _hud.SetActive(true);
         CurrentState = LevelState.Gameplay;
         Time.timeScale = 1f; // <- could be set in awake?
         InputManager.InputActions.Player.Enable();
@@ -102,7 +102,7 @@ public class LevelManager : MonoBehaviour
 
     private void SpawnPlayer(LevelEntryPoint entryPoint)
     {
-        PlayerInstance = Instantiate(playerPrefab);
+        PlayerInstance = Instantiate(_playerPrefab);
 
         var spawnPosition = DefaultSpawnPoint.position;
 
@@ -113,11 +113,11 @@ public class LevelManager : MonoBehaviour
 
         PlayerInstance.transform.position = spawnPosition;
 
-        PlayerInstance.name = playerPrefab.name;
+        PlayerInstance.name = _playerPrefab.name;
 
-        if (PlayerInstance.TryGetComponent(out playerHealth))
+        if (PlayerInstance.TryGetComponent(out _playerHealth)) // <- The PlayerPrefab should just allways have a PlayerHealth component so this could be simplified.
         {
-            playerHealth.OnDeath += OnPlayerDeath;
+            _playerHealth.OnDeath += OnPlayerDeath;
         }
         
         OnPlayerSpawn?.Invoke(PlayerInstance);
@@ -126,7 +126,7 @@ public class LevelManager : MonoBehaviour
     private void OnPlayerDeath()
     {
         Debug.Log("Game Over");
-        deathScreen.SetActive(true);
+        _deathScreen.SetActive(true);
         CurrentState = LevelState.GameOver;
     }
 
