@@ -16,21 +16,22 @@ namespace ShadyPixel.Events
         public void AddListener<EventType>(ISPEventListenerBase<EventType> listener)
         {
             Type eventType = typeof(EventType);
+            (bool keyExists, bool hasSubscription) = IsSubscribed(eventType, listener);
 
-            if (_lookup.ContainsKey(eventType))
-            {
-                _lookup[eventType].Add(listener);
-            }
-            else
+            if (!keyExists)
             {
                 _lookup[eventType] = new List<ISPEventListenerBase>() { listener };
+            }
+            else if(!hasSubscription)
+            {
+                _lookup[eventType].Add(listener);
             }
         }
         public void RemoveListener<EventType>(ISPEventListenerBase<EventType> listener)
         {
             Type eventType = typeof(EventType);
-
-            if (IsSubscribed(eventType, listener))
+            (_, bool hasSubscription) = IsSubscribed(eventType, listener);
+            if (hasSubscription)
             {
                 _lookup[eventType].Remove(listener);
             }
@@ -47,16 +48,18 @@ namespace ShadyPixel.Events
                 }
             }
         }
-        private bool IsSubscribed(Type type, ISPEventListenerBase receiver)
+        private (bool, bool) IsSubscribed(Type type, ISPEventListenerBase receiver)
         {
-            bool exists = false;
+            bool keyExists = false;
+            bool subExists = false;
 
             if (_lookup.TryGetValue(type, out List<ISPEventListenerBase> subscriptions))
             {
-                exists = subscriptions.IndexOf(receiver) > 0;
+                keyExists = true;
+                subExists = subscriptions.IndexOf(receiver) > 0;
             }
 
-            return exists;
+            return (keyExists, subExists);
         }
     }
 }
