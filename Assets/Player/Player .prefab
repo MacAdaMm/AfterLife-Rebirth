@@ -88,8 +88,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d1375f51c336e649be492c802176c49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 920187399574831703}
-  flipAnimatorWithOrientation: 1
+  _animator: {fileID: 920187399574831703}
+  _flipAnimatorWithOrientation: 1
   _weaponController: {fileID: 6195221713883040428}
   _movementController: {fileID: 7099980012156843058}
 --- !u!114 &8382730324405118971
