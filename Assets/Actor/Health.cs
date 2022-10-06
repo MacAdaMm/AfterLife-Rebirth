@@ -50,6 +50,14 @@ public class Health : MonoBehaviour, IHittable, ISaveable
         }
     }
 
+    private void Start()
+    {
+        if(CurrentHealth == 0)
+        {
+            CurrentHealth = MaxHealth;
+        }
+    }
+
     public void HealMax()
     {
         CurrentHealth = MaxHealth;
