@@ -7,7 +7,6 @@ public class MovementController : MonoBehaviour
     private const float IDLE_THRESHOLD = 0.1f;
     public enum MovementState { IDLE, MOVING, FALLING, DASHING }
 
-    
     [SerializeField] private float _moveSpeed = 3.5f;
     [SerializeField] private Rigidbody2D _rigidBody;
 

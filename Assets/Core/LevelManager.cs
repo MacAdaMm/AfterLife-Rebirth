@@ -98,6 +98,8 @@ public class LevelManager : MonoBehaviour
         CurrentState = LevelState.Gameplay;
         Time.timeScale = 1f; // <- could be set in awake?
         InputManager.InputActions.Player.Enable();
+        
+        SaveManager.Load();
     }
 
     private void SpawnPlayer(LevelEntryPoint entryPoint)

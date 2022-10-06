@@ -31,10 +31,9 @@ public class FallDownHoles : MonoBehaviour
             if (collider.gameObject.IsInLayerMask(_holeLayer))
             {
                 _movementController.Fall();
-                _animator.SetBool("IsFalling", _movementController.CurrentMovementState == MovementController.MovementState.FALLING);
             }
         }
-
+        _animator.SetBool("IsFalling", _movementController.CurrentMovementState == MovementController.MovementState.FALLING);
         if (_movementController.CurrentMovementState == MovementController.MovementState.FALLING && !_health.IsDead)
         {
             _health.Kill();

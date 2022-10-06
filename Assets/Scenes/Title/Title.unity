@@ -316,8 +316,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _defaultSelected: {fileID: 1976506178}
-  startButton: {fileID: 1976506181}
-  quitButton: {fileID: 777641108}
+  _startButton: {fileID: 1976506181}
+  _quitButton: {fileID: 777641108}
 --- !u!1 &541073126
 GameObject:
   m_ObjectHideFlags: 0
@@ -1505,6 +1505,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7842679749574907578, guid: 567b8e462af547140b018cdb10861e7a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7842679749574907579, guid: 567b8e462af547140b018cdb10861e7a, type: 3}
+      propertyPath: _editorLoadGameDataOnAwake
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -1,15 +1,33 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class Health : MonoBehaviour
+
+
+public class Health : MonoBehaviour, IHittable, ISaveable
 {
-    [SerializeField] 
-    protected int maxHealth = 3;
+    [System.Serializable]
+    public class HealthData
+    {
+        public int CurrentHealth { get; }
+        public int MaxHealth { get; }
+
+        public HealthData(int current, int max)
+        {
+            CurrentHealth = current;
+            MaxHealth = max;
+        }
+    }
+
+    [SerializeField]
+    private bool _disableOnDeath;
 
     [field: SerializeField]
     public int CurrentHealth { get; protected set; }
-    public int MaxHealth => maxHealth;
+    [field: SerializeField]
+    public int MaxHealth { get; protected set; }
 
+    public UnityEvent OnHit;
     public event Action<int, int> OnHealthChanged;
     public event Action OnDeath;
 
@@ -21,13 +39,21 @@ public class Health : MonoBehaviour
         CurrentHealth = Mathf.Max(0, newHealthAmount);
         if (OnHealthChanged != null)
         {
-            OnHealthChanged.Invoke(CurrentHealth, maxHealth);
+            OnHealthChanged.Invoke(CurrentHealth, MaxHealth);
         }
+
+        OnHit.Invoke();
 
         if (CurrentHealth == 0 && IsDead == false)
         {
             Kill();
         }
+    }
+
+    public void HealMax()
+    {
+        CurrentHealth = MaxHealth;
+        OnHealthChanged?.Invoke(CurrentHealth, MaxHealth);
     }
 
     public void Kill()
@@ -40,13 +66,12 @@ public class Health : MonoBehaviour
         }
         if (OnHealthChanged != null)
         {
-            OnHealthChanged.Invoke(CurrentHealth, maxHealth);
+            OnHealthChanged.Invoke(CurrentHealth, MaxHealth);
         }
-    }
-
-    private void Awake()
-    {
-        CurrentHealth = maxHealth;
+        if (_disableOnDeath)
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     private void OnValidate()
@@ -56,6 +81,19 @@ public class Health : MonoBehaviour
             return;
         }
 
-        CurrentHealth = maxHealth;
+        CurrentHealth = MaxHealth;
+    }
+
+    public object CaptureState()
+    {
+        return new HealthData(CurrentHealth, MaxHealth);
+    }
+
+    public void RestoreState(object state)
+    {
+        var healthData = (HealthData)state;
+        CurrentHealth = healthData.CurrentHealth;
+        MaxHealth = healthData.MaxHealth;
+        OnHealthChanged?.Invoke(CurrentHealth, MaxHealth);
     }
 }

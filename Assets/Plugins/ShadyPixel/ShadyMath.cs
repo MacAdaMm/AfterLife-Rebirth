@@ -6,15 +6,23 @@ namespace ShadyPixel
 {
     public static class ShadyMath
     {
+        public static float GetAngle(this Vector2 direction, float angleSnap = 0f)
+        {
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            if (angleSnap > float.Epsilon) { angle = Mathf.Round(angle / angleSnap) * angleSnap; }
+
+            return angle;
+        }
+
         /// <summary>
         /// Snaps a <paramref name="direction"/> vector to an angle increment <paramref name="angleSnap"/> (eg 45)
         /// </summary>
         /// <param name="direction">The direction vector to snap.</param>
         /// <param name="angleSnap">The angle to snap to.</param>
-        public static Vector3 AngleSnap(Vector2 direction, int angleSnap)
+        public static Vector3 AngleSnap(Vector2 direction, float angleSnap)
         {
-            //  gets the angle from the look direction
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            float angle = direction.GetAngle();
+
             //  rotates object to face the new angle
             Vector3 vec = Quaternion.AngleAxis(angle, Vector3.forward).eulerAngles;
 

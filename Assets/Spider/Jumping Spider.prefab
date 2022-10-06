@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 9079420492416589764}
   - component: {fileID: 9079420492416589765}
   - component: {fileID: 2155631220949077742}
+  - component: {fileID: 842036483}
+  - component: {fileID: 842036484}
   m_Layer: 0
   m_Name: Jumping Spider
   m_TagString: Untagged
@@ -48,10 +50,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f6fa5cf03a8321429776c7fb5764859, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpWindupRange: {x: 0.25, y: 0.5}
-  jumpDuration: 0.5
-  jumpDistance: 1.5
-  visionRadius: 5
+  jumpWindupRange: {x: 0.25, y: 1.5}
+  jumpDuration: 0.6
+  jumpDistance: 2.5
+  visionRadius: 3.5
   AvoidanceLayers:
     serializedVersion: 2
     m_Bits: 16
@@ -84,7 +86,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 1
+  m_LinearDrag: 5
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
@@ -92,6 +94,68 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &842036483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9079420492416589766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f643ef45685a7a47bffc6181d06c7ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _target: {fileID: 9079420492811821482}
+  _duration: 0.2
+  _strength: 0.25
+  _vibrato: 50
+  _randomness: 90
+  _snapping: 0
+  _fadeOut: 1
+  _randomnessMode: 0
+--- !u!114 &842036484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9079420492416589766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9107d95790eb40e48886659ff173ae1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _disableOnDeath: 1
+  <CurrentHealth>k__BackingField: 3
+  <MaxHealth>k__BackingField: 3
+  OnHit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 842036483}
+        m_TargetAssemblyTypeName: PositionShaker, Assembly-CSharp
+        m_MethodName: Shake
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 9079420492416589764}
+        m_TargetAssemblyTypeName: Spider, Assembly-CSharp
+        m_MethodName: InterruptJump
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &9079420492811821483
 GameObject:
   m_ObjectHideFlags: 0

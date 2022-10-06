@@ -9,7 +9,6 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
     [SerializeField] private bool _flipAnimatorWithOrientation = true;
-    
     [SerializeField] private WeaponController _weaponController;
     [SerializeField] private MovementController _movementController;
 
@@ -34,6 +33,11 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
+        if(Time.timeScale < float.Epsilon)
+        {
+            return;
+        }
+
         _moveInput = InputManager.InputActions.Player.Move.ReadValue<Vector2>();
         _movementController.SetMovementInput(_moveInput);
 
@@ -65,6 +69,7 @@ public class PlayerController : MonoBehaviour
     private void OnDeath()
     {
         _movementController.FreezeMovement(true);
+        _weaponController.enabled = false;
 
         if (_animator)
         {

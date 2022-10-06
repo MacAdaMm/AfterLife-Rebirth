@@ -9,7 +9,6 @@ using DG.Tweening.Plugins.Options;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Spider : MonoBehaviour
 {
-    
     public Vector2 jumpWindupRange = new Vector2(1, 2);
     public float jumpDuration = .5f;
     public float jumpDistance = 2f;
@@ -22,6 +21,13 @@ public class Spider : MonoBehaviour
     private Rigidbody2D _rb;
     private Vector2 _targetPos;
     private TweenerCore<Vector2, Vector2, VectorOptions> _movementTween;
+
+    public void InterruptJump()
+    {
+        //_movementTween.endValue = transform.position;
+        _movementTween.Kill();
+        _nextJumpTime = Time.time + Random.Range(jumpWindupRange.x, jumpWindupRange.y) * 1.5f;
+    }
 
     private void Awake()
     {
@@ -38,9 +44,9 @@ public class Spider : MonoBehaviour
     }
     void FixedUpdate()
     {
-        if(_nextJumpTime >= Time.time)
+        if(_nextJumpTime <= Time.time)
         {
-            _nextJumpTime = 0f;
+            _nextJumpTime = float.MaxValue;
             Vector3 playerPos = _levelManager.PlayerInstance.transform.position;
             bool isPlayerInVisionRange = Vector2.Distance(transform.position, playerPos) <= visionRadius;
             bool isPlayerDead = _levelManager.PlayerHealth.IsDead;

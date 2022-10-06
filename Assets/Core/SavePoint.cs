@@ -31,6 +31,10 @@ public class SavePoint : MonoBehaviour
             return;
         }
 
+        if(collision.TryGetComponent(out Health health))
+        {
+            health.HealMax();
+        }
         GameManager.Instance.SetCheckpoint(this);
         OnSavePointActivated.Invoke(this);
         SaveManager.Save();
