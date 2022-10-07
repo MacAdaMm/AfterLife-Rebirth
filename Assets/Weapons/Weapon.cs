@@ -5,38 +5,31 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    [field: SerializeField]
-    public Animator Animator { get; private set; }
+    public Action OnAttackPerformed;
+    public Action OnAttackFinished;
 
-    [field: SerializeField]
-    public SpriteRenderer SpriteRenderer { get; private set; }
-
-    [field: SerializeField]
-    public float AttackCooldown { get; private set; }
-
+    [SerializeField] private Animator _animator;
     [SerializeField] private int _damage = 1;
 
-    public bool InUse { get; protected set; }
+    public bool InUse { get; private set; }
 
-    public bool AttackStart()
+    // Check current state and trigger animations
+    public void Attack()
     {
-        if (InUse)
-        {
-            return false;
-        }
-        else
-        {
-            StartCoroutine(Attack());
-            return true;
-        }
+        if (InUse) { return; }
+
+        InUse = true;
+        _animator.SetTrigger("attack");
+        OnAttackPerformed?.Invoke();
     }
 
-    IEnumerator Attack()
+    // Called back from the animator on last frame of weapon attack or whenever you want cooldown to end.
+    public void FinishAttack()
     {
-        InUse = true;
-        Animator.SetTrigger("attack");
-        yield return new WaitForSeconds(AttackCooldown);
+        if (InUse == false) { return; }
+
         InUse = false;
+        OnAttackFinished?.Invoke();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

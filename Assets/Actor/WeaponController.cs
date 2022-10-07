@@ -7,6 +7,8 @@ using ShadyPixel;
 
 public class WeaponController : MonoBehaviour
 {
+    private const float ATTACK_INPUT_THRESHOLD = 0.25f;
+
     [field: SerializeField]
     public Animator CharacterAnimator { get; private set; }
 
@@ -19,36 +21,25 @@ public class WeaponController : MonoBehaviour
     [SerializeField]
     private Transform _weaponAttachPoint; 
 
-    [Range(0f, 90f)]
-    [SerializeField]
-    private float _angleSnap = 0f;
-
     private MovementController _movementController;
+    private float _lastAttackInputTime = float.MinValue;
 
-    public void PreformAttack()
+    public void Attack()
     {
         if (CurrentWeapon == false) { return; }
-
-        if (CurrentWeapon.AttackStart())
-        {
-            CharacterAnimator.SetTrigger("attack");
-        }
-    }
-
-    public void SetWeapon()
-    {
-
+        _lastAttackInputTime = Time.time;
     }
 
     private void Update()
     {
         UpdateOrientation();
         UpdateWeaponAim();
+        ProcessAttack();
     }
 
     private void UpdateOrientation()
     {
-        if(_movementController.MoveInput.magnitude > float.Epsilon)
+        if(_movementController.MoveInput.magnitude > 0.1f)
         {
             Orientation = _movementController.MoveInput.normalized;
         }
@@ -58,7 +49,7 @@ public class WeaponController : MonoBehaviour
     {
         if(CurrentWeapon == null || CurrentWeapon.InUse) { return; }
 
-        float angle = Orientation.GetAngle(_angleSnap);
+        float angle = Orientation.GetAngle();
 
         Vector3 normalScale = Vector3.one;
         Vector3 flippedScale = normalScale;
@@ -72,15 +63,26 @@ public class WeaponController : MonoBehaviour
         _weaponAttachPoint.localPosition = -Orientation * 0.0625f;
     }
 
-    private void OnDrawGizmos()
+    private void ProcessAttack()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawRay(transform.position, Orientation);
+        if (CurrentWeapon == null || CurrentWeapon.InUse) { return; }
+
+        if(_lastAttackInputTime + ATTACK_INPUT_THRESHOLD > Time.time)
+        {
+            _lastAttackInputTime = float.MinValue;
+            CurrentWeapon.Attack();
+        }
     }
 
-    private void Awake()
+    private void OnWeaponAttackPerformed()
     {
-        _movementController = GetComponent<MovementController>();
+        CharacterAnimator.SetTrigger("attack");
+        _movementController.FreezeMovement(true);
+    }
+
+    private void OnWeaponAttackFinished()
+    {
+        _movementController.FreezeMovement(false);
     }
 
     private void OnEnable()
@@ -96,6 +98,22 @@ public class WeaponController : MonoBehaviour
         if (CurrentWeapon)
         {
             CurrentWeapon.gameObject.SetActive(false);
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(transform.position, Orientation);
+    }
+
+    private void Awake()
+    {
+        _movementController = GetComponent<MovementController>();
+        if (CurrentWeapon != null)
+        {
+            CurrentWeapon.OnAttackPerformed += OnWeaponAttackPerformed;
+            CurrentWeapon.OnAttackFinished += OnWeaponAttackFinished;
         }
     }
 }

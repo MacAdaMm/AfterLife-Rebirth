@@ -1469,15 +1469,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7842679749574907578, guid: 567b8e462af547140b018cdb10861e7a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.9204226
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7842679749574907578, guid: 567b8e462af547140b018cdb10861e7a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.31281972
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7842679749574907578, guid: 567b8e462af547140b018cdb10861e7a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 732.6836
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7842679749574907578, guid: 567b8e462af547140b018cdb10861e7a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1505,10 +1505,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7842679749574907578, guid: 567b8e462af547140b018cdb10861e7a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7842679749574907579, guid: 567b8e462af547140b018cdb10861e7a, type: 3}
-      propertyPath: _editorLoadGameDataOnAwake
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

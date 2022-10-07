@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
 
         if(InputManager.InputActions.Player.Attack.WasPerformedThisFrame())
         {
-            _weaponController.PreformAttack();
+            _weaponController.Attack();
         }
     }
     private void FixedUpdate()
@@ -54,11 +54,11 @@ public class PlayerController : MonoBehaviour
 
             if (_flipAnimatorWithOrientation)
             {
-                if(_moveInput.x > float.Epsilon)
+                if(_moveInput.x > 0.1f)
                 {
                     _animator.transform.right = Vector3.right;
                 }
-                else if (_moveInput.x < -float.Epsilon)
+                else if (_moveInput.x < -0.1f)
                 {
                     _animator.transform.right = Vector3.left;
                 }

@@ -9,6 +9,7 @@ public class MovementController : MonoBehaviour
 
     [SerializeField] private float _moveSpeed = 3.5f;
     [SerializeField] private Rigidbody2D _rigidBody;
+    private bool _isFrozen;
 
     public Vector2 MoveInput { get; private set; }
     public Vector2 Velocity { get; private set; }
@@ -32,12 +33,18 @@ public class MovementController : MonoBehaviour
     private void FixedUpdate()
     {
         _rigidBody.velocity = MoveInput * _moveSpeed;
+
+        if (_isFrozen)
+        {
+            _rigidBody.velocity = Vector2.zero;
+        }
+
         Velocity = _rigidBody.velocity;
     }
 
     public void FreezeMovement(bool state)
     {
-        _rigidBody.simulated = !state;
+        _isFrozen = state;
     }
 
     public void Fall()
