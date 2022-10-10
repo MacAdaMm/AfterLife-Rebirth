@@ -5,7 +5,6 @@ using UnityEngine.Events;
 
 public class Spawner : MonoBehaviour, ISaveable
 {
-
     /* 
      * BUG: When theres a save handler on this GameObject and an item has spawned, If you dont "pick up" the item before we reload you can never pick up the item right now...
      * 

@@ -19,13 +19,20 @@ public class Lockable : MonoBehaviour
 
     public void Lock()
     {
-        IsLocked = true;
-        OnLock?.Invoke();
+        if (!IsLocked)
+        {
+            IsLocked = true;
+            OnLock?.Invoke();
+        }
+        
     }
     public void Unlock()
     {
-        IsLocked = false;
-        OnUnlock?.Invoke();
+        if (IsLocked)
+        {
+            IsLocked = false;
+            OnUnlock?.Invoke();
+        }
     }
 
     private bool EvaluateConditions()

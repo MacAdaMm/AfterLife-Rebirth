@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffc3ab050f342e942896a359a64b86ea, type: 3}
+  m_Name: SwordData
+  m_EditorClassIdentifier: 
+  <InGameName>k__BackingField: Rusty Sword
+  <Description>k__BackingField: An old rusty sword. Looks like it has seen better
+    days...
+  <InventorySprite>k__BackingField: {fileID: 0}
+  RuntimeWeaponPrefab: {fileID: 4254445925916249637, guid: 82e7e90ca00568b4cbeac3214319dbdd, type: 3}

@@ -92,7 +92,6 @@ public class GameManager : MonoBehaviour, ISaveable
 			return;
         }
 
-		//SaveManager.Load();
 		LevelManager.Current?.SetEntryPoint(_targetLevelEntryPointId);
 		_targetLevelEntryPointId = null;
 	}
