@@ -3,20 +3,21 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class SPCinemachineZone : MonoBehaviour
 {
-    [SerializeField] private CinemachineVirtualCamera _virtualCamera;
+    [SerializeField] 
+    private CinemachineVirtualCamera _virtualCamera;
+
+    [field: SerializeField]
+    public UnityEvent OnZoneEnter { get; private set; }
+
+    [field: SerializeField] 
+    public UnityEvent OnZoneExit { get; private set; }
+
     private static SPCinemachineZone _currentActiveZone;
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            ActivateZone();
-        }
-    }
-    
     private void ActivateZone()
     {
         if (_currentActiveZone == this)
@@ -25,6 +26,7 @@ public class SPCinemachineZone : MonoBehaviour
         }
 
         _virtualCamera.gameObject.SetActive(true);
+        OnZoneEnter.Invoke();
 
         if (_currentActiveZone != null)
         {
@@ -41,7 +43,16 @@ public class SPCinemachineZone : MonoBehaviour
             _currentActiveZone = null;
         }
 
+        OnZoneExit.Invoke();
         _virtualCamera.gameObject.SetActive(false);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            ActivateZone();
+        }
     }
 
     private void Awake()
