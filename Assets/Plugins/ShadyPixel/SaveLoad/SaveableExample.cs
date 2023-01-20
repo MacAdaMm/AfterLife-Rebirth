@@ -2,28 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SaveableExample : MonoBehaviour, ISaveable
+namespace ShadyPixel.SaveLoad
 {
-    private bool _isEnabled;
-
-    private void OnEnable()
+    public class SaveableExample : MonoBehaviour, ISaveable
     {
-        _isEnabled = true;
-    }
+        private bool _isEnabled;
 
-    private void OnDisable()
-    {
-        _isEnabled = false;
-    }
+        private void OnEnable()
+        {
+            _isEnabled = true;
+        }
 
-    public object CaptureState()
-    {
-        return _isEnabled;
-    }
+        private void OnDisable()
+        {
+            _isEnabled = false;
+        }
 
-    public void RestoreState(object state)
-    {
-        _isEnabled = (bool)state;
-        enabled = _isEnabled;
+        public object CaptureState()
+        {
+            return _isEnabled;
+        }
+
+        public void RestoreState(object state)
+        {
+            _isEnabled = (bool)state;
+            enabled = _isEnabled;
+        }
     }
 }

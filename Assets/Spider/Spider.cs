@@ -5,6 +5,7 @@ using ShadyPixel;
 using DG.Tweening;
 using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
+using Afterlife.Core;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Spider : MonoBehaviour

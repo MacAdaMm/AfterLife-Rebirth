@@ -4,27 +4,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-[SelectionBase]
-public class TeleportOnTriggerEnter : MonoBehaviour
+namespace Afterlife.Core
 {
-    [SerializeField]
-    private string _sceneName = "Title";
-
-    [SerializeField]
-    private string _levelEntryId;
-
-    public void LoadTargetScene()
+    [SelectionBase]
+    public class TeleportOnTriggerEnter : MonoBehaviour
     {
-        InputManager.InputActions.Player.Disable();
-        GameManager.Instance.LoadScene(_sceneName, _levelEntryId);
-    }
+        [SerializeField]
+        private string _sceneName = "Title";
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        bool isPlayerObject = collision.gameObject.CompareTag("Player");
-        if (isPlayerObject)
+        [SerializeField]
+        private string _levelEntryId;
+
+        public void LoadTargetScene()
         {
-            LoadTargetScene();
+            SPInputManager.InputActions.Player.Disable();
+            GameManager.Instance.LoadScene(_sceneName, _levelEntryId);
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            bool isPlayerObject = collision.gameObject.CompareTag("Player");
+            if (isPlayerObject)
+            {
+                LoadTargetScene();
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using ShadyPixel.SaveLoad;
+using UnityEngine;
 
 [RequireComponent(typeof(SaveHandler))]
 [RequireComponent(typeof(SpriteRenderer))]

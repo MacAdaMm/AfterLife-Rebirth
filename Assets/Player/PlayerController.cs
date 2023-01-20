@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
         }
 
     }
+
     private void OnDestroy()
     {
         if (_health)
@@ -31,6 +32,7 @@ public class PlayerController : MonoBehaviour
             _health.OnDeath -= OnDeath;
         }
     }
+
     private void Update()
     {
         if(Time.timeScale < float.Epsilon)
@@ -38,14 +40,15 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        _moveInput = InputManager.InputActions.Player.Move.ReadValue<Vector2>();
+        _moveInput = SPInputManager.InputActions.Player.Move.ReadValue<Vector2>();
         _movementController.SetMovementInput(_moveInput);
 
-        if(InputManager.InputActions.Player.Attack.WasPerformedThisFrame())
+        if(SPInputManager.InputActions.Player.Attack.WasPerformedThisFrame())
         {
             _weaponController.Attack();
         }
     }
+
     private void FixedUpdate()
     {
         if (_animator)
@@ -74,7 +77,6 @@ public class PlayerController : MonoBehaviour
         if (_animator)
         {
             _animator.SetBool("IsDead", true);
-            
         }
 
         enabled = false;

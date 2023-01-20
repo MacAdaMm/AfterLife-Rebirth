@@ -4,152 +4,155 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public enum LevelState
+namespace Afterlife.Core
 {
-    Initialization,
-    Gameplay,
-    Paused,
-    GameOver
-}
-public class LevelManager : MonoBehaviour
-{
-    private string _targetEntryPoint;
 
-    public static LevelManager Current { get; private set; }
-
-    /// <summary> REDO IN FUTURE
-    /// Reference to player and health probably doesnt need to live in level manager.
-    /// Might need to replace with player singleton eventually.
-    /// </summary>
-    public GameObject PlayerInstance { get; private set; }
-    public Health PlayerHealth => _playerHealth;
-    private Health _playerHealth;
-
-    public LevelState CurrentState { get; private set; }
-
-    [Header("Player Settings")]
-    [SerializeField] private GameObject _playerPrefab;
-
-    [field: SerializeField] public Transform DefaultSpawnPoint { get; set; }
-
-    [Header("UI")]
-    [SerializeField] private GameObject _hud;
-    [SerializeField] private GameObject _pauseScreen;
-    [SerializeField] private GameObject _deathScreen;
-
-    public event Action<GameObject> OnPlayerSpawn;
-
-    public void Pause()
+    public enum LevelState
     {
-        if (CurrentState != LevelState.Gameplay) { return; }
-
-        Debug.Log("Pause");
-        Time.timeScale = 0f;
-        CurrentState = LevelState.Paused;
-        _pauseScreen.SetActive(true);
+        Initialization,
+        Gameplay,
+        Paused,
+        GameOver
     }
-
-    public void SetEntryPoint(string levelEntryPointId)
+    public class LevelManager : MonoBehaviour
     {
-        _targetEntryPoint = levelEntryPointId;
-    }
+        private string _targetEntryPoint;
 
-    public void Unpause()
-    {
-        if (CurrentState != LevelState.Paused) { return; }
+        public static LevelManager Current { get; private set; }
 
-        Debug.Log("Unpause");
-        Time.timeScale = 1f;
-        CurrentState = LevelState.Gameplay;
-        _pauseScreen.SetActive(false);
-    }
+        /// <summary> REDO IN FUTURE
+        /// Reference to player and health probably doesnt need to live in level manager.
+        /// Might need to replace with player singleton eventually.
+        /// </summary>
+        public GameObject PlayerInstance { get; private set; }
 
-    private void Awake()
-    {
-        Current = this;
+        // Probably shouldnt be in level manager.
+        public Health PlayerHealth => _playerHealth;
+        private Health _playerHealth;
 
-        CurrentState = LevelState.Initialization;
-        _hud.SetActive(false);
-        _pauseScreen.SetActive(false);
-        _deathScreen.SetActive(false);
+        public LevelState CurrentState { get; private set; }
 
-        var cams = FindObjectsOfType<Cinemachine.CinemachineVirtualCamera>();
-        foreach (var cam in cams)
+        [Header("Player Settings")]
+        [SerializeField] private GameObject _playerPrefab;
+
+        [field: SerializeField] public Transform DefaultSpawnPoint { get; set; }
+
+        [Header("UI")]
+        [SerializeField] private GameObject _hud;
+        [SerializeField] private GameObject _pauseScreen;
+        [SerializeField] private GameObject _deathScreen;
+
+        public event Action<GameObject> OnPlayerSpawn;
+
+        public void SetEntryPoint(string levelEntryPointId)
         {
-            OnPlayerSpawn += (go) =>
-            {
-                cam.Follow = go.transform;
-            };
-        }
-    }
-
-    private void OnDestroy()
-    {
-        Current = null;
-    }
-
-    private void Start()
-    {
-        LevelEntryPoint entryPoint = FindObjectsOfType<LevelEntryPoint>().Where((e) => e.Id == _targetEntryPoint).FirstOrDefault();
-
-        SpawnPlayer(entryPoint);
-        _hud.SetActive(true);
-        CurrentState = LevelState.Gameplay;
-        Time.timeScale = 1f; // <- could be set in awake?
-        InputManager.InputActions.Player.Enable();
-        
-        SaveManager.Load();
-    }
-
-    private void SpawnPlayer(LevelEntryPoint entryPoint)
-    {
-        PlayerInstance = Instantiate(_playerPrefab);
-
-        var spawnPosition = DefaultSpawnPoint.position;
-
-        if (entryPoint != null)
-        {
-            spawnPosition = entryPoint.SpawnOffset.position;
+            _targetEntryPoint = levelEntryPointId;
         }
 
-        PlayerInstance.transform.position = spawnPosition;
-
-        PlayerInstance.name = _playerPrefab.name;
-
-        if (PlayerInstance.TryGetComponent(out _playerHealth)) // <- The PlayerPrefab should just allways have a PlayerHealth component so this could be simplified.
+        public void Pause()
         {
-            _playerHealth.OnDeath += OnPlayerDeath;
+            if (CurrentState != LevelState.Gameplay) { return; }
+
+            Time.timeScale = 0f;
+            CurrentState = LevelState.Paused;
+            _pauseScreen.SetActive(true);
         }
-        
-        OnPlayerSpawn?.Invoke(PlayerInstance);
-    }
 
-    private void OnPlayerDeath()
-    {
-        Debug.Log("Game Over");
-        _deathScreen.SetActive(true);
-        CurrentState = LevelState.GameOver;
-    }
-
-    private void Update()
-    {
-        HandlePlayerInput();
-    }
-
-    private void HandlePlayerInput()
-    {
-        if (InputManager.InputActions.Player.Pause.WasPerformedThisFrame())
+        public void Unpause()
         {
-            if (CurrentState == LevelState.Gameplay)
+            if (CurrentState != LevelState.Paused) { return; }
+
+            Time.timeScale = 1f;
+            CurrentState = LevelState.Gameplay;
+            _pauseScreen.SetActive(false);
+        }
+
+        private void Awake()
+        {
+            Current = this;
+            CurrentState = LevelState.Initialization;
+            _hud.SetActive(false);
+            _pauseScreen.SetActive(false);
+            _deathScreen.SetActive(false);
+
+            var cams = FindObjectsOfType<Cinemachine.CinemachineVirtualCamera>();
+            foreach (var cam in cams)
             {
-                Pause();
-            }
-            else if (CurrentState == LevelState.Paused)
-            {
-                Unpause();
+                OnPlayerSpawn += (go) =>
+                {
+                    cam.Follow = go.transform;
+                };
             }
         }
-    }
 
+        private void OnDestroy()
+        {
+            Current = null;
+        }
+
+        private void Start()
+        {
+            LevelEntryPoint entryPoint = FindObjectsOfType<LevelEntryPoint>().Where((e) => e.Id == _targetEntryPoint).FirstOrDefault();
+
+            SpawnPlayer(entryPoint);
+            _hud.SetActive(true);
+            CurrentState = LevelState.Gameplay;
+            Time.timeScale = 1f; // <- could be set in awake?
+            SPInputManager.InputActions.Player.Enable();
+
+            GameManager.LoadData();
+        }
+
+        private void SpawnPlayer(LevelEntryPoint entryPoint)
+        {
+            PlayerInstance = Instantiate(_playerPrefab);
+
+            var spawnPosition = DefaultSpawnPoint.position;
+
+            if (entryPoint != null)
+            {
+                spawnPosition = entryPoint.SpawnOffset.position;
+            }
+
+            PlayerInstance.transform.position = spawnPosition;
+
+            PlayerInstance.name = _playerPrefab.name;
+
+            if (PlayerInstance.TryGetComponent(out _playerHealth)) // <- The PlayerPrefab should just allways have a PlayerHealth component so this could be simplified.
+            {
+                _playerHealth.OnDeath += OnPlayerDeath;
+            }
+
+            OnPlayerSpawn?.Invoke(PlayerInstance);
+        }
+
+        private void OnPlayerDeath()
+        {
+            Debug.Log("Game Over", PlayerInstance);
+            _deathScreen.SetActive(true);
+            CurrentState = LevelState.GameOver;
+        }
+
+        private void Update()
+        {
+            HandlePlayerInput();
+        }
+
+        private void HandlePlayerInput()
+        {
+            if (SPInputManager.InputActions.Player.Pause.WasPerformedThisFrame())
+            {
+                if (CurrentState == LevelState.Gameplay)
+                {
+                    Pause();
+                }
+                else if (CurrentState == LevelState.Paused)
+                {
+                    Unpause();
+                }
+            }
+        }
+    }
 }

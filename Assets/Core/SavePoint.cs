@@ -4,45 +4,50 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SavePoint : MonoBehaviour
+namespace Afterlife.Core
 {
-    public static event Action<SavePoint> OnSavePointActivated;
-
-    [SerializeField] private Sprite _activeSprite;
-    [SerializeField] private Sprite _inactiveSprite;
-
-    private void Awake()
+    public class SavePoint : MonoBehaviour
     {
-        OnSavePointActivated += ChangeActiveSavePoint;
+        public static event Action<SavePoint> OnSavePointActivated;
 
-        if (TryGetComponent(out LevelEntryPoint entryPoint) && entryPoint.Id == GameManager.Instance.CurrentCheckpointId)
+        [SerializeField] private Sprite _activeSprite;
+        [SerializeField] private Sprite _inactiveSprite;
+
+        private void Awake()
         {
-            ChangeActiveSavePoint(this);
+            OnSavePointActivated += ChangeActiveSavePoint;
+
+            if (TryGetComponent(out LevelEntryPoint entryPoint) && entryPoint.Id == GameManager.Instance.CurrentCheckpointId)
+            {
+                ChangeActiveSavePoint(this);
+            }
         }
-    }
-    private void OnDestroy()
-    {
-        OnSavePointActivated -= ChangeActiveSavePoint;
-    }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(!collision.gameObject.CompareTag("Player"))
+        private void OnDestroy()
         {
-            return;
+            OnSavePointActivated -= ChangeActiveSavePoint;
+        }
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (!collision.gameObject.CompareTag("Player"))
+            {
+                return;
+            }
+
+            if (collision.TryGetComponent(out Health health))
+            {
+                health.HealMax();
+            }
+
+            GameManager.SetCheckpoint(this);
+            GameManager.Save();
+
+            OnSavePointActivated.Invoke(this);
         }
 
-        if(collision.TryGetComponent(out Health health))
+        private void ChangeActiveSavePoint(SavePoint savePoint)
         {
-            health.HealMax();
+            var isActiveSavePoint = savePoint == this;
+            gameObject.GetComponent<SpriteRenderer>().sprite = isActiveSavePoint ? _activeSprite : _inactiveSprite;
         }
-        GameManager.Instance.SetCheckpoint(this);
-        OnSavePointActivated.Invoke(this);
-        SaveManager.Save();
-    }
-
-    private void ChangeActiveSavePoint(SavePoint savePoint)
-    {
-        var isActiveSavePoint = savePoint == this;
-        gameObject.GetComponent<SpriteRenderer>().sprite = isActiveSavePoint ? _activeSprite : _inactiveSprite;
     }
 }

@@ -3,35 +3,39 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using ShadyPixel.UI;
+using Afterlife.Core;
 
-public class UIPauseScreen : UIMenu
+namespace Afterlife.UI
 {
-    [Header("Resume")]
-    [SerializeField] private Button _resumeButton;
-
-    [Header("Main Menu")]
-    [SerializeField] private Button _mainMenuButton;
-
-    private void Awake()
+    public class UIPauseScreen : UIMenu
     {
-        _resumeButton.onClick.AddListener(OnResumeButtonPressed);
-        _mainMenuButton.onClick.AddListener(OnMainMenuButtonPressed);
-    }
+        [Header("Resume")]
+        [SerializeField] private Button _resumeButton;
 
-    private void OnDestroy()
-    {
-        _resumeButton.onClick.RemoveListener(OnResumeButtonPressed);
-        _mainMenuButton.onClick.RemoveListener(OnMainMenuButtonPressed);
-    }
+        [Header("Main Menu")]
+        [SerializeField] private Button _mainMenuButton;
 
-    private void OnResumeButtonPressed()
-    {
-        LevelManager.Current.Unpause();
-    }
+        private void Awake()
+        {
+            _resumeButton.onClick.AddListener(OnResumeButtonPressed);
+            _mainMenuButton.onClick.AddListener(OnMainMenuButtonPressed);
+        }
 
-    private void OnMainMenuButtonPressed()
-    {
-        GameManager.Instance.LoadScene("Title");
+        private void OnDestroy()
+        {
+            _resumeButton.onClick.RemoveListener(OnResumeButtonPressed);
+            _mainMenuButton.onClick.RemoveListener(OnMainMenuButtonPressed);
+        }
+
+        private void OnResumeButtonPressed()
+        {
+            LevelManager.Current.Unpause();
+        }
+
+        private void OnMainMenuButtonPressed()
+        {
+            GameManager.Instance.LoadScene("Title");
+        }
     }
 }
-

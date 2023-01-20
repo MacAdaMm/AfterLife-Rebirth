@@ -13,8 +13,10 @@ GameObject:
   - component: {fileID: 8324743716333705632}
   - component: {fileID: 8324743716333705567}
   - component: {fileID: 8324743716333705564}
+  - component: {fileID: -1796390379823531233}
+  - component: {fileID: -7360803753824521933}
   m_Layer: 0
-  m_Name: Pixel Camera
+  m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -105,8 +107,8 @@ MonoBehaviour:
   m_UpdateMethod: 0
   m_BlendUpdateMethod: 0
   m_DefaultBlend:
-    m_Style: 1
-    m_Time: 2
+    m_Style: 6
+    m_Time: 0.5
     m_CustomCurve:
       serializedVersion: 2
       m_Curve: []
@@ -140,3 +142,46 @@ MonoBehaviour:
   m_CropFrameX: 1
   m_CropFrameY: 1
   m_StretchFill: 0
+--- !u!114 &-1796390379823531233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8324743716333705633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FirstSelected: {fileID: 0}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
+--- !u!114 &-7360803753824521933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8324743716333705633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MoveRepeatDelay: 999
+  m_MoveRepeatRate: 9999
+  m_XRTrackingOrigin: {fileID: 0}
+  m_ActionsAsset: {fileID: -944628639613478452, guid: 8c456620d8b951c46b69b37ca09d3cab, type: 3}
+  m_PointAction: {fileID: -2436187916257319213, guid: 8c456620d8b951c46b69b37ca09d3cab, type: 3}
+  m_MoveAction: {fileID: -3482321737522088177, guid: 8c456620d8b951c46b69b37ca09d3cab, type: 3}
+  m_SubmitAction: {fileID: 5767154107138078716, guid: 8c456620d8b951c46b69b37ca09d3cab, type: 3}
+  m_CancelAction: {fileID: 0}
+  m_LeftClickAction: {fileID: 425771705291117480, guid: 8c456620d8b951c46b69b37ca09d3cab, type: 3}
+  m_MiddleClickAction: {fileID: 0}
+  m_RightClickAction: {fileID: 0}
+  m_ScrollWheelAction: {fileID: 0}
+  m_TrackedDevicePositionAction: {fileID: 0}
+  m_TrackedDeviceOrientationAction: {fileID: 0}
+  m_DeselectOnBackgroundClick: 0
+  m_PointerBehavior: 0

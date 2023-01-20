@@ -42,13 +42,13 @@ GameObject:
   m_Component:
   - component: {fileID: 8382730324405118972}
   - component: {fileID: 8382730324405118973}
+  - component: {fileID: 3644044218731671818}
   - component: {fileID: 5236813797821399804}
   - component: {fileID: 8382730324405118974}
   - component: {fileID: 8382730324405118971}
   - component: {fileID: 6195221713883040428}
   - component: {fileID: 7099980012156843058}
   - component: {fileID: 8459709508011659270}
-  - component: {fileID: 3644044218731671818}
   m_Layer: 0
   m_Name: 'Player '
   m_TagString: Player
@@ -94,6 +94,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!58 &3644044218731671818
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8382730324405118975}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.4
 --- !u!114 &5236813797821399804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198,22 +214,6 @@ MonoBehaviour:
   _holeLayer:
     serializedVersion: 2
     m_Bits: 16
---- !u!58 &3644044218731671818
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8382730324405118975}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.4
 --- !u!1 &8382730325255850550
 GameObject:
   m_ObjectHideFlags: 0

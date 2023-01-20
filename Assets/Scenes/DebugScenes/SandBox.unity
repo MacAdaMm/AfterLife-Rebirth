@@ -17178,7 +17178,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 626270905}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -17188,8 +17188,8 @@ Transform:
   - {fileID: 403222190}
   - {fileID: 895555618}
   - {fileID: 892638352}
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_Father: {fileID: 2015043104}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &823007247
 PrefabInstance:
@@ -17246,7 +17246,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 7842679749574907579, guid: 567b8e462af547140b018cdb10861e7a, type: 3}
+      propertyPath: _editorLoadGameDataOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 263998129, guid: 567b8e462af547140b018cdb10861e7a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 567b8e462af547140b018cdb10861e7a, type: 3}
 --- !u!1 &892638351
 GameObject:
@@ -27275,6 +27280,7 @@ Transform:
   - {fileID: 1301365277}
   - {fileID: 1221214813}
   - {fileID: 1772174612}
+  - {fileID: 626270906}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -27390,17 +27396,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Level Manager
       objectReference: {fileID: 0}
-    - target: {fileID: 7219413667336899297, guid: 2dbfd5f6012bd84448ef0566cf34e623, type: 3}
-      propertyPath: m_DefaultBlend.m_Time
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7219413667336899297, guid: 2dbfd5f6012bd84448ef0566cf34e623, type: 3}
-      propertyPath: m_DefaultBlend.m_Style
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7219413667336899299, guid: 2dbfd5f6012bd84448ef0566cf34e623, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
+    - target: {fileID: 3169072609263373654, guid: 2dbfd5f6012bd84448ef0566cf34e623, type: 3}
+      propertyPath: m_Color.a
+      value: 0.34901962
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2dbfd5f6012bd84448ef0566cf34e623, type: 3}

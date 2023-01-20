@@ -4,35 +4,41 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using ShadyPixel.UI;
+using Afterlife.Core;
 
-public class UIDeathScreen : UIMenu
+namespace Afterlife.UI
 {
-    [Header("Respawn")]
-    [SerializeField] private Button _respawnButton;
-
-    [Header("Main Menu")]
-    [SerializeField] private Button _mainMenuButton;
-
-    private void Awake()
+    public class UIDeathScreen : UIMenu
     {
-        _respawnButton.onClick.AddListener(OnRespawnButtonPressed);
-        _mainMenuButton.onClick.AddListener(OnMainMenuButtonPressed);
-    }
+        [Header("Respawn")]
+        [SerializeField] private Button _respawnButton;
+
+        [Header("Main Menu")]
+        [SerializeField] private Button _mainMenuButton;
+
+        private void Awake()
+        {
+            _respawnButton.onClick.AddListener(OnRespawnButtonPressed);
+            _mainMenuButton.onClick.AddListener(OnMainMenuButtonPressed);
+        }
 
 
-    private void OnDestroy()
-    {
-        _respawnButton.onClick.RemoveListener(OnRespawnButtonPressed);
-        _mainMenuButton.onClick.RemoveListener(OnMainMenuButtonPressed);
-    }
+        private void OnDestroy()
+        {
+            _respawnButton.onClick.RemoveListener(OnRespawnButtonPressed);
+            _mainMenuButton.onClick.RemoveListener(OnMainMenuButtonPressed);
+        }
 
-    private void OnRespawnButtonPressed()
-    {
-        GameManager.Instance.LoadGame();
-    }
+        private void OnRespawnButtonPressed()
+        {
+            GameManager.Instance.LoadLastCheckpoint();
+        }
 
-    private void OnMainMenuButtonPressed()
-    {
-        GameManager.Instance.LoadScene("Title");
+        private void OnMainMenuButtonPressed()
+        {
+            GameManager.Instance.LoadScene("Title");
+        }
     }
 }
+

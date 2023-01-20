@@ -1,5 +1,8 @@
-public interface ISaveable
+namespace ShadyPixel.SaveLoad
 {
-    object CaptureState();
-    void RestoreState(object state);
+    public interface ISaveable
+    {
+        object CaptureState();
+        void RestoreState(object state);
+    }
 }

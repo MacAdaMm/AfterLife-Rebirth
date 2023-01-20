@@ -11,12 +11,11 @@ namespace ShadyPixel.UI
 		{
 			_canvas = GetComponent<Canvas>();
 			SceneManager.sceneLoaded += OnSceneLoaded;
-			UpdateWorldCamera();
 		}
 
 		protected void OnEnable()
 		{
-			UpdateWorldCamera();
+			_canvas.worldCamera = Camera.main;
 		}
 
 		protected void OnDestroy()
@@ -27,12 +26,7 @@ namespace ShadyPixel.UI
 		protected void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
 		{
 			if(loadSceneMode == LoadSceneMode.Additive) { return; }
-			
-			UpdateWorldCamera();
-		}
-    
-		protected void UpdateWorldCamera()
-		{
+
 			_canvas.worldCamera = Camera.main;
 		}
 	}

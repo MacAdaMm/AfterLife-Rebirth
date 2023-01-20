@@ -4,17 +4,17 @@ using UnityEngine;
 
 namespace ShadyPixel.Input
 {
-	public static class InputManager
+	public static class SPInputManager
 	{
-		private static InputActions _inputActions;
+		private static SPInputActions _inputActions;
 
-		public static InputActions InputActions
+		public static SPInputActions InputActions
 		{
 			get
 			{
 				if (_inputActions == null)
 				{
-					_inputActions = new InputActions();
+					_inputActions = new SPInputActions();
 					_inputActions.Enable();
 				}
 
