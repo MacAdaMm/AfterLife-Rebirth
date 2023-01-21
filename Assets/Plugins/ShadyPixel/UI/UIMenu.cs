@@ -12,23 +12,29 @@ namespace ShadyPixel.UI
 
         public bool IsVisable => gameObject.activeInHierarchy;
 
+        protected GameObject _previousSelected;
+
+        private void OnEnable()
+        {
+            Show();
+        }
+
         public virtual void Show()
         {
             gameObject.SetActive(true);
+            _previousSelected = EventSystem.current.currentSelectedGameObject;
+
+            if (EventSystem.current && _defaultSelected)
+            {
+                EventSystem.current.SetSelectedGameObject(_defaultSelected);
+            }
         }
 
         public virtual void Hide()
         {
             gameObject.SetActive(false);
-        }
-
-        protected virtual void OnEnable()
-        {
-            if (EventSystem.current && _defaultSelected)
-            {
-                EventSystem.current.SetSelectedGameObject(null);
-                EventSystem.current.SetSelectedGameObject(_defaultSelected);
-            }
+            EventSystem.current.SetSelectedGameObject(_previousSelected);
+            _previousSelected = null;
         }
     }
 }

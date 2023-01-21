@@ -15,6 +15,8 @@ namespace Afterlife.UI
         [SerializeField] private Button _continueButton;
         [SerializeField] private Button _quitButton;
 
+        [SerializeField] private UIModalWindow _modalWindow;
+
         private bool _doesSaveDataExist;
 
         private void Awake()
@@ -24,14 +26,14 @@ namespace Afterlife.UI
             _quitButton.onClick.AddListener(OnQuitButtonPressed);
 
             _doesSaveDataExist = GameManager.SaveDataExists();
-            if (_doesSaveDataExist == false)
+            if (_doesSaveDataExist)
             {
-                _continueButton.gameObject.SetActive(false);
-                _defaultSelected = _newGameButton.gameObject;
+                _defaultSelected = _continueButton.gameObject;
             }
             else
             {
-                _defaultSelected = _continueButton.gameObject;
+                _continueButton.gameObject.SetActive(false);
+                _defaultSelected = _newGameButton.gameObject;
             }
         }
 
@@ -44,6 +46,23 @@ namespace Afterlife.UI
 
         private void OnNewGameButtonPressed()
         {
+            if (_doesSaveDataExist)
+            {
+                _modalWindow.Show(
+                    title: "New Game",
+                    message: "Are you sure you want to start a new game?\nCurrent save data will be deleted.",
+                    confirmText: "Yes",
+                    confirmAction: NewGameConfirm,
+                    cancelText: "No");
+            }
+            else
+            {
+                NewGameConfirm();
+            }
+        }
+
+        private void NewGameConfirm()
+        {
             GameManager.Instance.LoadNewGame();
         }
 
@@ -52,7 +71,17 @@ namespace Afterlife.UI
             GameManager.Instance.LoadLastCheckpoint();
         }
 
-        private void OnQuitButtonPressed()
+        private void OnQuitButtonPressed() 
+        {
+            _modalWindow.Show(
+                title: "Quit Game", 
+                message: "Are you sure you want to quit?", 
+                confirmText: "Yes", 
+                confirmAction: OnQuitConfirm, 
+                cancelText: "No");
+        }
+
+        private void OnQuitConfirm()
         {
             GameManager.Instance.QuitApplication();
         }

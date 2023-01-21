@@ -9,14 +9,14 @@ EditorBuildSettings:
     path: Assets/Scenes/Title/Title.unity
     guid: 40bce83d51932494cb91bfe118046baa
   - enabled: 1
+    path: Assets/Scenes/DebugScenes/SwapScene Example.unity
+    guid: 10cba2924bcbd7d4d92739e02d66405c
+  - enabled: 1
     path: Assets/Scenes/DebugScenes/SandBox.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
     path: Assets/Scenes/DebugScenes/CheckPoint Example.unity
     guid: e22fa18ae8962fc4fb648aa3a0d78726
-  - enabled: 1
-    path: Assets/Scenes/DebugScenes/SwapScene Example.unity
-    guid: 10cba2924bcbd7d4d92739e02d66405c
   - enabled: 1
     path: Assets/Scenes/DebugScenes/CheckPoint Example 1.unity
     guid: 2a65fc33d1192c148acb5e31977b75fc

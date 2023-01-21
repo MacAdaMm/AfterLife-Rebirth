@@ -16,6 +16,8 @@ namespace Afterlife.UI
         [Header("Main Menu")]
         [SerializeField] private Button _mainMenuButton;
 
+        [SerializeField] private UIModalWindow _modalWindow;
+
         private void Awake()
         {
             _resumeButton.onClick.AddListener(OnResumeButtonPressed);
@@ -35,7 +37,12 @@ namespace Afterlife.UI
 
         private void OnMainMenuButtonPressed()
         {
-            GameManager.Instance.LoadScene("Title");
+            _modalWindow.Show(
+                title: "Main Menu",
+                message: "Are you sure you want to main menu?\nUnsaved data will be deleted.",
+                confirmText: "Yes",
+                confirmAction: () => GameManager.Instance.LoadScene("Title"),
+                cancelText: "No");
         }
     }
 }

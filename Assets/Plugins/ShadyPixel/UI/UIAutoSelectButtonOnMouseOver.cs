@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 namespace ShadyPixel.UI
 {
-    public class UIAutoSelectButtonOnMouseOver : MonoBehaviour, IPointerMoveHandler
+    public class UIAutoSelectButtonOnMouseOver : MonoBehaviour, IPointerEnterHandler
     {
         private Button _button;
 
@@ -15,7 +15,7 @@ namespace ShadyPixel.UI
             _button = GetComponent<Button>();
         }
 
-        public void OnPointerMove(PointerEventData eventData)
+        public void OnPointerEnter(PointerEventData eventData)
         {
             _button.Select();
         }

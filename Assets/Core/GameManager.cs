@@ -37,8 +37,6 @@ namespace Afterlife.Core
 		public string CurrentCheckpointId { get => _saveData.CheckPointId; }
 		public string CurrentCheckpointSceneName { get => _saveData.CheckPointSceneName; }
 
-		[SerializeField] private bool _logEvents = true;
-
 		[SerializeField]
 		[Tooltip("Should the game data be loaded on Awake(), If FALSE game data will have default values.\n" +
 			"Will only work in editor mode.")]
@@ -158,7 +156,7 @@ namespace Afterlife.Core
 
 			_screenFadeCanvasGroup.alpha = 0f;
 			_screenFadeCanvasGroup.gameObject.SetActive(true);
-			_screenFadeCanvasGroup.DOFade(1f, 1f).SetUpdate(true).SetEase(Ease.InOutSine).onComplete += () =>
+			_screenFadeCanvasGroup.DOFade(1f, 0.25f).SetUpdate(true).SetEase(Ease.InOutSine).onComplete += () =>
 			{
 				
 #if UNITY_EDITOR
